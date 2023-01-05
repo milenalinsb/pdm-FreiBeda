@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+
+  id Int @id @default(autoincrement())
+  username String 
+  email String @unique
+  senha String
+
+  created_At DateTime
+  modified_At DateTime
+
+  @@map("user")
+}
+
+model OSC {
+
+  id Int @id @default(autoincrement())
+  nome String
+  sigla String
+  data_Fundacao DateTime
+
+  endereco Enderecos?
+
+  publico_Alvo String
+  missao String
+  visao String
+
+  governanca Governanca[]
+
+  projetos Projetos[]
+
+  created_At DateTime
+  modified_At DateTime
+
+  @@map("osc")
+
+}
+
+model Enderecos {
+
+  id Int @id @default(autoincrement())
+  logradouro String 
+  numero String
+  cep String
+  bairro String
+  cidade String
+  estado String
+  referencia String
+
+  osc OSC @relation(fields: [id_fk_osc], references: [id])
+  id_fk_osc Int @unique
+
+  beneficiarios Beneficiarios @relation(fields: [id_fk_beneficiario], references: [id])
+  id_fk_beneficiario Int @unique
+
+  created_At DateTime
+  modified_At DateTime
+
+  @@map("enderecos")
+}
+
+model Governanca {
+
+  id Int @id @default(autoincrement())
+  nome String
+  cargo String
+
+  osc OSC @relation(fields: [id_fk_osc], references: [id])
+  id_fk_osc Int
+
+  created_At DateTime
+  modified_At DateTime
+
+  @@map("governanca")
+}
+
+model Projetos {
+
+  id Int @id @default(autoincrement())
+
+  osc OSC @relation(fields: [id_fk_osc], references: [id])
+  id_fk_osc Int
+
+  resumo_Projeto Resumo_Projetos?
+  id_fk_resumo_Projeto Int
+
+  beneficiarios Beneficiarios[]
+  
+  planejamento Planejamentos[]
+
+  @@map("projetos")
+}
+
+
+model Resumo_Projetos {
+  
+  id Int @id @default(autoincrement())
+  nome String
+  impacto String
+  objetivo String
+  atividades String
+  responsavel String
+  valor String
+  patrocinadores String
+
+  projeto Projetos @relation(fields: [id_fk_projeto], references: [id])
+  id_fk_projeto Int @unique
+
+  created_At DateTime
+  ended_At DateTime
+  modified_At DateTime
+
+  @@map("resumo_projetos")
+}
+
+model Beneficiarios {
+
+  id Int @id @default(autoincrement())
+  nome String
+  data_Nascimento DateTime
+  sexo String
+  cor_Declarada String
+  is_Menor Boolean
+  responsavel_Menor String
+  profissao String
+  renda_Mensal String
+
+  endereco Enderecos?
+
+  projeto Projetos @relation(fields: [id_fk_projeto], references: [id])
+  id_fk_projeto Int  
+
+  created_At DateTime
+  ended_At DateTime
+  modified_At DateTime
+
+  @@map("beneficiarios")
+}
+
+model Planejamentos {
+
+  id Int @id @default(autoincrement())
+  atividade String
+  recursos String
+  custo String
+  responsavel String
+  status Boolean
+
+  projeto Projetos @relation(fields: [id_fk_projeto], references: [id])
+  id_fk_projeto Int
+
+  created_At DateTime
+  ended_At DateTime
+  modified_At DateTime
+
+  @@map("planejamentos")
+}
