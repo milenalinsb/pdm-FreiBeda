@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,159 +7,131 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Usuarios {
+  id          Int      @id @default(autoincrement())
+  username    String
+  email       String   @unique
+  senha       String
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
 
-  id Int @id @default(autoincrement())
-  username String 
-  email String @unique
-  senha String
-
-  created_At DateTime
-  modified_At DateTime
-
-  @@map("user")
+  @@map("usuarios")
 }
 
 model OSC {
-
-  id Int @id @default(autoincrement())
-  nome String
-  sigla String
+  id            Int          @id @default(autoincrement())
+  nome          String
+  sigla         String
   data_Fundacao DateTime
-
-  endereco Enderecos?
-
-  publico_Alvo String
-  missao String
-  visao String
-
-  governanca Governanca[]
-
-  projetos Projetos[]
-
-  created_At DateTime
-  modified_At DateTime
+  publico_Alvo  String
+  missao        String
+  visao         String
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
+  endereco      Enderecos?
+  governanca    Governanca[]
+  projetos      Projetos[]
 
   @@map("osc")
-
 }
 
 model Enderecos {
-
-  id Int @id @default(autoincrement())
-  logradouro String 
-  numero String
-  cep String
-  bairro String
-  cidade String
-  estado String
-  referencia String
-
-  osc OSC @relation(fields: [id_fk_osc], references: [id])
-  id_fk_osc Int @unique
-
-  beneficiarios Beneficiarios @relation(fields: [id_fk_beneficiario], references: [id])
-  id_fk_beneficiario Int @unique
-
-  created_At DateTime
-  modified_At DateTime
+  id                 Int           @id @default(autoincrement())
+  logradouro         String
+  numero             String
+  cep                String
+  bairro             String
+  cidade             String
+  estado             String
+  referencia         String
+  id_fk_osc          Int           @unique
+  id_fk_beneficiario Int           @unique
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
+  beneficiarios      Beneficiarios @relation(fields: [id_fk_beneficiario], references: [id])
+  osc                OSC           @relation(fields: [id_fk_osc], references: [id])
 
   @@map("enderecos")
 }
 
 model Governanca {
-
-  id Int @id @default(autoincrement())
-  nome String
-  cargo String
-
-  osc OSC @relation(fields: [id_fk_osc], references: [id])
-  id_fk_osc Int
-
-  created_At DateTime
-  modified_At DateTime
+  id          Int      @id @default(autoincrement())
+  nome        String
+  cargo       String
+  id_fk_osc   Int
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
+  osc         OSC      @relation(fields: [id_fk_osc], references: [id])
 
   @@map("governanca")
 }
 
 model Projetos {
-
-  id Int @id @default(autoincrement())
-
-  osc OSC @relation(fields: [id_fk_osc], references: [id])
-  id_fk_osc Int
-
-  resumo_Projeto Resumo_Projetos?
+  id                   Int              @id @default(autoincrement())
+  id_fk_osc            Int
   id_fk_resumo_Projeto Int
+  beneficiarios        Beneficiarios[]
+  planejamento         Planejamentos[]
+  osc                  OSC              @relation(fields: [id_fk_osc], references: [id])
+  resumo_Projeto       Resumo_Projetos?
 
-  beneficiarios Beneficiarios[]
-  
-  planejamento Planejamentos[]
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
 
   @@map("projetos")
 }
 
-
 model Resumo_Projetos {
-  
-  id Int @id @default(autoincrement())
-  nome String
-  impacto String
-  objetivo String
-  atividades String
-  responsavel String
-  valor String
+  id             Int      @id @default(autoincrement())
+  nome           String
+  impacto        String
+  objetivo       String
+  atividades     String
+  responsavel    String
+  valor          String
   patrocinadores String
+  id_fk_projeto  Int      @unique
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
+  ended_At       DateTime @default(now())
 
-  projeto Projetos @relation(fields: [id_fk_projeto], references: [id])
-  id_fk_projeto Int @unique
-
-  created_At DateTime
-  ended_At DateTime
-  modified_At DateTime
+  projeto        Projetos @relation(fields: [id_fk_projeto], references: [id])
 
   @@map("resumo_projetos")
 }
 
 model Beneficiarios {
-
-  id Int @id @default(autoincrement())
-  nome String
-  data_Nascimento DateTime
-  sexo String
-  cor_Declarada String
-  is_Menor Boolean
+  id                Int        @id @default(autoincrement())
+  nome              String
+  data_Nascimento   DateTime
+  sexo              String
+  cor_Declarada     String
+  is_Menor          Boolean
   responsavel_Menor String
-  profissao String
-  renda_Mensal String
-
-  endereco Enderecos?
-
-  projeto Projetos @relation(fields: [id_fk_projeto], references: [id])
-  id_fk_projeto Int  
-
-  created_At DateTime
-  ended_At DateTime
-  modified_At DateTime
+  profissao         String
+  renda_Mensal      String
+  id_fk_projeto     Int
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
+  ended_At       DateTime @default(now())
+  projeto           Projetos   @relation(fields: [id_fk_projeto], references: [id])
+  endereco          Enderecos?
 
   @@map("beneficiarios")
 }
 
 model Planejamentos {
-
-  id Int @id @default(autoincrement())
-  atividade String
-  recursos String
-  custo String
-  responsavel String
-  status Boolean
-
-  projeto Projetos @relation(fields: [id_fk_projeto], references: [id])
+  id            Int      @id @default(autoincrement())
+  atividade     String
+  recursos      String
+  custo         String
+  responsavel   String
+  status        Boolean
   id_fk_projeto Int
-
-  created_At DateTime
-  ended_At DateTime
-  modified_At DateTime
+  created_At  DateTime @default(now())
+  modified_At DateTime @default(now())
+  ended_At       DateTime @default(now())
+  projeto       Projetos @relation(fields: [id_fk_projeto], references: [id])
 
   @@map("planejamentos")
 }

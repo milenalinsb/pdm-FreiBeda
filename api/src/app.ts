@@ -2,7 +2,7 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
-import { router } from "./routes";
+import { routes } from "./routes";
 
 const app = express();
 
@@ -21,11 +21,11 @@ app.use((req, res, next) => {
 });
 
 //Definido json como padrão
-app.use(express.json({ limit: "200mb" }));
+app.use(express.json());
 
 //Configurando rotas da API
-app.use(router);
+app.use(routes);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
     console.log(`🚀 Server started on port:${process.env.PORT}`);
 });
