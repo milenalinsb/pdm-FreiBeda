@@ -6,7 +6,7 @@ const usuariosDao = new UsuariosDao();
 export class UsuariosController {
 
 
-    async cadastrarUsuario(req:Request, res:Response){
+    async registroUsuario(req:Request, res:Response){
 
         try {
             

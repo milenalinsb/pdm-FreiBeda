@@ -4,6 +4,8 @@ import express from "express";
 import helmet from "helmet";
 import { routes } from "./routes";
 
+
+
 const app = express();
 
 app.use(helmet());
@@ -20,7 +22,7 @@ app.use((req, res, next) => {
     next();
 });
 
-//Definido json como padrão
+//Definindo json como padrão
 app.use(express.json());
 
 //Configurando rotas da API
@@ -29,3 +31,8 @@ app.use(routes);
 app.listen(process.env.PORT || 8080, () => {
     console.log(`🚀 Server started on port:${process.env.PORT}`);
 });
+
+app.get('/home', (req, res) => {
+    return res.status(200)
+                .send('Server rodando na porta 8080.')
+})
