@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Usuarios {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(uuid())
   username    String
   email       String   @unique
   senha       String
@@ -19,7 +19,7 @@ model Usuarios {
 }
 
 model OSC {
-  id            Int          @id @default(autoincrement())
+  id          String      @id @default(uuid())
   nome          String
   sigla         String
   data_Fundacao DateTime
@@ -36,7 +36,7 @@ model OSC {
 }
 
 model Enderecos {
-  id                 Int           @id @default(autoincrement())
+  id          String      @id @default(uuid())
   logradouro         String
   numero             String
   cep                String
@@ -44,8 +44,8 @@ model Enderecos {
   cidade             String
   estado             String
   referencia         String
-  id_fk_osc          Int           @unique
-  id_fk_beneficiario Int           @unique
+  id_fk_osc          String           @unique
+  id_fk_beneficiario String           @unique
   created_At  DateTime @default(now())
   modified_At DateTime @default(now())
   beneficiarios      Beneficiarios @relation(fields: [id_fk_beneficiario], references: [id])
@@ -55,10 +55,10 @@ model Enderecos {
 }
 
 model Governanca {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(uuid())
   nome        String
   cargo       String
-  id_fk_osc   Int
+  id_fk_osc   String
   created_At  DateTime @default(now())
   modified_At DateTime @default(now())
   osc         OSC      @relation(fields: [id_fk_osc], references: [id])
@@ -67,8 +67,8 @@ model Governanca {
 }
 
 model Projetos {
-  id                   Int              @id @default(autoincrement())
-  id_fk_osc            Int
+  id          String      @id @default(uuid())
+  id_fk_osc            String
   id_fk_resumo_Projeto Int
   beneficiarios        Beneficiarios[]
   planejamento         Planejamentos[]
@@ -82,7 +82,7 @@ model Projetos {
 }
 
 model Resumo_Projetos {
-  id             Int      @id @default(autoincrement())
+  id          String      @id @default(uuid())
   nome           String
   impacto        String
   objetivo       String
@@ -90,7 +90,7 @@ model Resumo_Projetos {
   responsavel    String
   valor          String
   patrocinadores String
-  id_fk_projeto  Int      @unique
+  id_fk_projeto  String      @unique
   created_At  DateTime @default(now())
   modified_At DateTime @default(now())
   ended_At       DateTime @default(now())
@@ -101,7 +101,7 @@ model Resumo_Projetos {
 }
 
 model Beneficiarios {
-  id                Int        @id @default(autoincrement())
+  id          String      @id @default(uuid())
   nome              String
   data_Nascimento   DateTime
   sexo              String
@@ -110,7 +110,7 @@ model Beneficiarios {
   responsavel_Menor String
   profissao         String
   renda_Mensal      String
-  id_fk_projeto     Int
+  id_fk_projeto     String
   created_At  DateTime @default(now())
   modified_At DateTime @default(now())
   ended_At       DateTime @default(now())
@@ -121,13 +121,13 @@ model Beneficiarios {
 }
 
 model Planejamentos {
-  id            Int      @id @default(autoincrement())
+  id          String      @id @default(uuid())
   atividade     String
   recursos      String
   custo         String
   responsavel   String
   status        Boolean
-  id_fk_projeto Int
+  id_fk_projeto String
   created_At  DateTime @default(now())
   modified_At DateTime @default(now())
   ended_At       DateTime @default(now())
