@@ -1,7 +1,11 @@
+import { TokenBlackListDao } from './../DAOs/TokenBlackListDao';
 import { IAutenticarUsuario, IEmailUsuario, IIdUsuario, IUsuario, UsuariosDao } from './../DAOs/UsuariosDao';
 import { Request, Response } from "express";
+import { splitToken } from '../utils/splitToken';
+import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
 
 const usuariosDao = new UsuariosDao();
+const tokenBl = new TokenBlackListDao();
 
 export class UsuariosController {
 
@@ -26,9 +30,40 @@ export class UsuariosController {
         };
     }
 
+    async logout(req:Request, res:Response){
+
+        try {
+
+            const header = req.headers.authorization;
+
+            if(!header) {
+                return res.status(403)
+                            .json({
+                                message:'Não há token.'
+                            });
+            };
+        
+            const token = splitToken(header);
+
+            await tokenBl.inserirToken(token);
+
+        } catch (error:any) {
+            return res.status(400).json({
+                message: error.message
+            });
+        }
+
+    }
+
     async buscarTodosUsuarios(req:Request, res:Response) {
         
         try {
+
+            const header = req.headers.authorization
+
+            const token =  splitToken(header);
+
+            await verificarTokenBl(token);
 
             const usuarios = await usuariosDao.buscarUsuarios();
 
@@ -65,6 +100,12 @@ export class UsuariosController {
     async deletarUsuario(req:Request, res:Response) {
 
         try {
+
+            const header = req.headers.authorization
+
+            const token =  splitToken(header);
+
+            await verificarTokenBl(token);
             
             const {email} = <IEmailUsuario>req.body;
 
@@ -87,6 +128,12 @@ export class UsuariosController {
     async buscarUsuarioById(req:Request, res:Response) {
 
         try {
+
+            const header = req.headers.authorization
+
+            const token =  splitToken(header);
+
+            await verificarTokenBl(token);
             
             const {id} = <IIdUsuario><unknown>req.params;
 
