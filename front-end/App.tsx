@@ -1,14 +1,17 @@
 import { Box, NativeBaseProvider } from "native-base";
-import { Text } from "react-native";
+import { Routes } from "./Routes";
 import { theme } from "./src/theme";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   return (
     <>
-      <NativeBaseProvider theme={theme}>
+     <GestureHandlerRootView style={{ flex: 1 }}>
+     <NativeBaseProvider theme={theme}>
         <Box bg={"primary.900"} safeAreaTop />
-        <Text>Open up App.tsx to start working on your app!</Text>
+        <Routes />
       </NativeBaseProvider>
+     </GestureHandlerRootView>
     </>
   );
 }
