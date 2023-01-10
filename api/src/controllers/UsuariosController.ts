@@ -1,9 +1,30 @@
-import { IEmailUsuario, IIdUsuario, IUsuario, UsuariosDao } from './../DAOs/UsuariosDao';
+import { IAutenticarUsuario, IEmailUsuario, IIdUsuario, IUsuario, UsuariosDao } from './../DAOs/UsuariosDao';
 import { Request, Response } from "express";
 
 const usuariosDao = new UsuariosDao();
 
 export class UsuariosController {
+
+    async login(req:Request, res:Response){
+        
+        try {
+
+            const {email, senha} = <IAutenticarUsuario>req.body;
+
+            const token = await usuariosDao.autenticarUsuario({email,senha});
+
+            return res.status(200)
+                        .set('Authorization', token)
+                        .json({
+                            token: token
+                        });
+            
+        } catch (error:any) {
+            return res.status(400).json({
+                message: error.message
+            });
+        };
+    }
 
     async buscarTodosUsuarios(req:Request, res:Response) {
         
@@ -20,7 +41,6 @@ export class UsuariosController {
             });
         };
     };
-
 
     async registroUsuario(req:Request, res:Response){
 

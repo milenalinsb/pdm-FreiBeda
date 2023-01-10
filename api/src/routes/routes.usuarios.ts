@@ -1,19 +1,24 @@
 import { UsuariosController } from './../controllers/UsuariosController';
 import { Router } from 'express';
-import { routes } from '.';
+import { verificarToken } from '../middlewares/verificarTokenJWT';
 
 
 const routesUsuarios = Router();
 
 const usuariosController = new UsuariosController();
 
+routesUsuarios.post('/login',
+                        usuariosController.login);
 routesUsuarios.get('/usuarios',
-                        usuariosController.buscarTodosUsuarios)
+                    verificarToken,
+                    usuariosController.buscarTodosUsuarios);
 routesUsuarios.get('/usuarios/buscar/:id',
+                        verificarToken,
                         usuariosController.buscarUsuarioById);
 routesUsuarios.post('/usuarios/cadastrar',
                         usuariosController.registroUsuario);
-routesUsuarios.delete('/usuarios/deletar', 
+routesUsuarios.delete('/usuarios/deletar',
+                        verificarToken,
                         usuariosController.deletarUsuario);
 
 export { routesUsuarios }

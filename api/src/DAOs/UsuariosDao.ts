@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { hash } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 
 export interface IUsuario{
     username: string;
@@ -15,9 +16,37 @@ export interface IIdUsuario{
     id: string;
 };
 
+export interface IAutenticarUsuario{
+    email:string;
+    senha: string;
+}
+
 const prisma = new PrismaClient();
 
 export class UsuariosDao{
+
+    async autenticarUsuario({email,senha}:IAutenticarUsuario){
+
+        const usuario = await this.buscarUsuario({email});
+
+        const verificarSenha = await compare(senha,usuario.senha);
+
+        if(!verificarSenha){
+            throw new Error("Senha está incorreta.");
+        };
+
+        const token = sign(
+            {email},
+            process.env.CHAVE_JWT!,
+            {
+                expiresIn:'1d',
+                algorithm:'HS256',
+                subject:usuario.id
+            }
+        );
+
+        return token;
+    }
 
     async buscarUsuarios() {
         
