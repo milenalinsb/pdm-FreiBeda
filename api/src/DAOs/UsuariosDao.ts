@@ -21,6 +21,18 @@ export interface IAutenticarUsuario{
     senha: string;
 }
 
+export interface IAtualizarUsuario{
+    id:string;
+    username:string;
+    email:string;
+    
+}
+
+export interface IEmailNomeUsuario{
+    username:string;
+    email:string;
+}
+
 const prisma = new PrismaClient();
 
 export class UsuariosDao{
@@ -130,5 +142,20 @@ export class UsuariosDao{
             }
         });
     };
+
+    async atualizarUsuario({id,username,email}:IAtualizarUsuario){
+
+        const novoUsuario = await prisma.usuarios.update({
+            where:{
+                id
+            },
+            data: {
+                username, 
+                email
+
+            }, 
+        })
+        return novoUsuario;
+    }
 
 }

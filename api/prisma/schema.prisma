@@ -135,3 +135,12 @@ model Planejamentos {
 
   @@map("planejamentos")
 }
+
+model TokenBlacklist {
+
+  id Int @id @default(autoincrement())
+  token String
+  created_At  DateTime @default(now())
+
+  @@map("tokenbl")
+}

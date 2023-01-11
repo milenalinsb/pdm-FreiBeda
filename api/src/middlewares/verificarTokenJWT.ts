@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+import { splitToken } from "../utils/splitToken";
 
 
 export function verificarToken(req: Request, res:Response, next:NextFunction) {
@@ -13,7 +14,7 @@ export function verificarToken(req: Request, res:Response, next:NextFunction) {
                     });
     };
 
-    const token = header.split(" ")[1];
+    const token = splitToken(header);
 
     try {
         
