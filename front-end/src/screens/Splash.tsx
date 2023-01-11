@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { LogoWhite } from "../components/LogoWhite";
 import { SplashContainer } from "../components/SplashContainer";
-import { getData } from "../services/getData";
+import { getToken } from "../services/asyncStorage";
 import { NavigationProps } from "../types/navigation";
 
 export const Splash = ({ navigation }: NavigationProps) => {
   useEffect(() => {
     const timer = setTimeout(async () => {
-      const token = await getData("@token");
+      const token = await getToken("@token");
       if (token !== null) {
         navigation.navigate("Dashboard");
       } else {

@@ -9,7 +9,11 @@ import {
   Text,
   VStack,
 } from "native-base";
+import { ALERT_TYPE, Dialog } from "react-native-alert-notification";
 import { LoginDto } from "../../dtos/login.dto";
+import { api } from "../../services/api";
+import { AxiosError } from "../../types/axiosError";
+import { ILogin } from "../../types/login";
 import { Button } from "../Button";
 import { styles } from "./styles";
 
@@ -19,7 +23,34 @@ export const FormLogin = () => {
       <Formik
         validate={createValidator(LoginDto)}
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={async (values, { resetForm, setErrors }) => {
+          try {
+            const data = await api.post("/login", {
+              email: values.email,
+              senha: values.password,
+            } as ILogin);
+            resetForm();
+          } catch (error) {
+            const data = error as AxiosError;
+            if (data.response.data.message === "Usuário não cadastrado.") {
+              setErrors({
+                email: "Usuário não cadastrado.",
+              });
+            } else if (data.response.data.message === "Senha está incorreta.") {
+              console.log(data.response.data.message);
+              setErrors({
+                password: data.response.data.message,
+              });
+            } else {
+              Dialog.show({
+                type: ALERT_TYPE.DANGER,
+                title: "Ops",
+                textBody: "Ocorreu um erro inesperado",
+                button: "Ok",
+              });
+            }
+          }
+        }}
       >
         {({
           values,
@@ -60,7 +91,9 @@ export const FormLogin = () => {
                   onChangeText={handleChange("email")}
                 />
                 {errors.email && touched.email ? (
-                  <Text fontSize="xs">{errors.email}</Text>
+                  <Text color={"warning.500"} fontSize="xs">
+                    {errors.email}
+                  </Text>
                 ) : null}
               </FormControl>
               <FormControl>
@@ -71,8 +104,10 @@ export const FormLogin = () => {
                   onChangeText={handleChange("password")}
                   type="password"
                 />
-                {errors.email && touched.email ? (
-                  <Text fontSize="xs">{errors.password}</Text>
+                {errors.password && touched.password ? (
+                  <Text color={"warning.500"} fontSize="xs">
+                    {errors.password}
+                  </Text>
                 ) : null}
               </FormControl>
               <Button onPress={handleSubmit} text={"Enviar"} />
