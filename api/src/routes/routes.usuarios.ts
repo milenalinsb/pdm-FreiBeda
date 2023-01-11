@@ -20,5 +20,8 @@ routesUsuarios.post('/usuarios/cadastrar',
 routesUsuarios.delete('/usuarios/deletar',
                         verificarToken,
                         usuariosController.deletarUsuario);
+ routesUsuarios.put('/usuarios/atualizar',
+                        verificarToken,
+                        usuariosController.atualizarUsuario);   
 
 export { routesUsuarios }

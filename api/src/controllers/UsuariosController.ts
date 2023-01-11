@@ -150,4 +150,26 @@ export class UsuariosController {
     
     };
 
+    async atualizarUsuario(req:Request, res:Response) {
+
+        try {
+
+            const {id} = <IIdUsuario><unknown>req.params;
+
+            const {username,email} = <IEmailnomeUsuario>req.body;
+
+            const novoUsuario = await usuariosDao.atualizarUsuario({id,username,email})
+
+            return res.status(204)
+                        .json( {usuario:novoUsuario} )
+
+        } catch (error:any) {
+            return res.status(400).json({
+                message: error.message
+            });
+        }
+            
+        
+    }
+
 }
