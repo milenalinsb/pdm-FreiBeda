@@ -12,10 +12,15 @@ import {
 import { ALERT_TYPE, Dialog } from "react-native-alert-notification";
 import { LoginDto } from "../../dtos/login.dto";
 import { api } from "../../services/api";
+<<<<<<< HEAD
 import { setToken } from "../../services/asyncStorage";
 import { AxiosError } from "../../types/axiosError";
 import { ILogin } from "../../types/login";
 import { NavigationProps } from "../../types/navigation";
+=======
+import { AxiosError } from "../../types/axiosError";
+import { ILogin } from "../../types/login";
+>>>>>>> impl-front-end
 import { Button } from "../Button";
 import { styles } from "./styles";
 
@@ -31,8 +36,11 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
               email: values.email,
               senha: values.password,
             } as ILogin);
+<<<<<<< HEAD
             setToken(data.data.token,24);
             navigation.navigate("Dashboard");
+=======
+>>>>>>> impl-front-end
             resetForm();
           } catch (error) {
             const data = error as AxiosError;
