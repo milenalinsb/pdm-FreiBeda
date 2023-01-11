@@ -9,6 +9,9 @@ const usuariosController = new UsuariosController();
 
 routesUsuarios.post('/login',
                         usuariosController.login);
+routesUsuarios.get('/logout',
+                        verificarToken,
+                        usuariosController.logout);
 routesUsuarios.get('/usuarios',
                     verificarToken,
                     usuariosController.buscarTodosUsuarios);
@@ -20,8 +23,8 @@ routesUsuarios.post('/usuarios/cadastrar',
 routesUsuarios.delete('/usuarios/deletar',
                         verificarToken,
                         usuariosController.deletarUsuario);
- routesUsuarios.put('/usuarios/atualizar',
+ routesUsuarios.put('/usuarios/atualizar/:id',
                         verificarToken,
-                        usuariosController.atualizarUsuario);   
+                        usuariosController.atualizarUsuario);
 
 export { routesUsuarios }

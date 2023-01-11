@@ -17,10 +17,13 @@ export class UsuariosController {
 
             const token = await usuariosDao.autenticarUsuario({email,senha});
 
-            return res.status(200)
+            const usuario = await usuariosDao.buscarUsuario({email});
+
+            return res.status(201)
                         .set('Authorization', token)
                         .json({
-                            token: token
+                            token: token,
+                            id: usuario.id
                         });
             
         } catch (error:any) {
@@ -45,7 +48,12 @@ export class UsuariosController {
         
             const token = splitToken(header);
 
-            await tokenBl.inserirToken(token);
+            await tokenBl.inserirToken({token});
+
+            return res.status(200)
+                        .json({
+                            message:'Logout realizado.'
+                        });
 
         } catch (error:any) {
             return res.status(400).json({
@@ -59,11 +67,7 @@ export class UsuariosController {
         
         try {
 
-            const header = req.headers.authorization
-
-            const token =  splitToken(header);
-
-            await verificarTokenBl(token);
+            await verificarTokenBl(req.headers.authorization);
 
             const usuarios = await usuariosDao.buscarUsuarios();
 
@@ -87,7 +91,7 @@ export class UsuariosController {
 
             const usuarioCadastrado = await usuariosDao.cadastrarUsuario({username,email,senha});
 
-            return res.status(200)
+            return res.status(201)
                         .json(usuarioCadastrado);
 
         } catch (error:any) {
@@ -101,11 +105,7 @@ export class UsuariosController {
 
         try {
 
-            const header = req.headers.authorization
-
-            const token =  splitToken(header);
-
-            await verificarTokenBl(token);
+            await verificarTokenBl(req.headers.authorization);
             
             const {email} = <IEmailUsuario>req.body;
 
@@ -129,11 +129,7 @@ export class UsuariosController {
 
         try {
 
-            const header = req.headers.authorization
-
-            const token =  splitToken(header);
-
-            await verificarTokenBl(token);
+            await verificarTokenBl(req.headers.authorization);
             
             const {id} = <IIdUsuario><unknown>req.params;
 
@@ -154,22 +150,22 @@ export class UsuariosController {
 
         try {
 
+            await verificarTokenBl(req.headers.authorization);
+
             const {id} = <IIdUsuario><unknown>req.params;
 
             const {username,email} = <IEmailNomeUsuario>req.body;
 
-            const novoUsuario = await usuariosDao.atualizarUsuario({id,username,email})
+            const novoUsuario = await usuariosDao.atualizarUsuario({id,username,email});
 
-            return res.status(204)
-                        .json( {usuario:novoUsuario} )
+            return res.status(200)
+                        .json( {usuario:novoUsuario} );
 
         } catch (error:any) {
             return res.status(400).json({
                 message: error.message
             });
-        }
-            
-        
-    }
+        };           
+    };
 
 }

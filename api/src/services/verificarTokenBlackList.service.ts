@@ -1,8 +1,11 @@
+import { splitToken } from '../utils/splitToken';
 import { TokenBlackListDao } from './../DAOs/TokenBlackListDao';
 
 const tokenBl = new TokenBlackListDao();
 
-export async function verificarTokenBl( token:any ) {
+export async function verificarTokenBl( header:any ) {
+
+    const token =  splitToken(header);
 
     const isValid =  await tokenBl.buscarTokenBl(token);
 
