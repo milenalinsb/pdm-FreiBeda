@@ -28,7 +28,7 @@ export interface IAtualizarUsuario{
     
 }
 
-export interface IEmailnomeUsuario{
+export interface IEmailNomeUsuario{
     username:string;
     email:string;
 }

@@ -1,5 +1,5 @@
 import { TokenBlackListDao } from './../DAOs/TokenBlackListDao';
-import { IAutenticarUsuario, IEmailUsuario, IIdUsuario, IUsuario, UsuariosDao } from './../DAOs/UsuariosDao';
+import { IAutenticarUsuario, IEmailNomeUsuario, IEmailUsuario, IIdUsuario, IUsuario, UsuariosDao } from './../DAOs/UsuariosDao';
 import { Request, Response } from "express";
 import { splitToken } from '../utils/splitToken';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
@@ -156,7 +156,7 @@ export class UsuariosController {
 
             const {id} = <IIdUsuario><unknown>req.params;
 
-            const {username,email} = <IEmailnomeUsuario>req.body;
+            const {username,email} = <IEmailNomeUsuario>req.body;
 
             const novoUsuario = await usuariosDao.atualizarUsuario({id,username,email})
 
