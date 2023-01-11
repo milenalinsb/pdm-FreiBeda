@@ -12,12 +12,14 @@ import {
 import { ALERT_TYPE, Dialog } from "react-native-alert-notification";
 import { LoginDto } from "../../dtos/login.dto";
 import { api } from "../../services/api";
+import { setToken } from "../../services/asyncStorage";
 import { AxiosError } from "../../types/axiosError";
 import { ILogin } from "../../types/login";
+import { NavigationProps } from "../../types/navigation";
 import { Button } from "../Button";
 import { styles } from "./styles";
 
-export const FormLogin = () => {
+export const FormLogin = ({ navigation }: NavigationProps) => {
   return (
     <Center style={styles.container} w="100%">
       <Formik
@@ -29,6 +31,8 @@ export const FormLogin = () => {
               email: values.email,
               senha: values.password,
             } as ILogin);
+            setToken(data.data.token,24);
+            navigation.navigate("Dashboard");
             resetForm();
           } catch (error) {
             const data = error as AxiosError;

@@ -7,8 +7,12 @@ export const getToken = async (kay: string) => {
     const value = await AsyncStorage.getItem(kay);
     const expire = await AsyncStorage.getItem("@expire");
     if (expire !== null) {
-      console.log(expire);
-      return value;
+      if (moment().format() >= expire) {
+        await AsyncStorage.clear();
+        return null;
+      } else {
+        return value;
+      }
     } else {
       return null;
     }
