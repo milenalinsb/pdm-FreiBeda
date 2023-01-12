@@ -1,14 +1,23 @@
 import { Box, NativeBaseProvider } from "native-base";
-import { Text } from "react-native";
+import { AlertNotificationRoot } from "react-native-alert-notification";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { LogBox } from "react-native";
+import { Routes } from "./Routes";
 import { theme } from "./src/theme";
 
 export default function App() {
+  LogBox.ignoreLogs(["Warning: ..."]);
+  LogBox.ignoreAllLogs();
   return (
     <>
-      <NativeBaseProvider theme={theme}>
-        <Box bg={"primary.900"} safeAreaTop />
-        <Text>Open up App.tsx to start working on your app!</Text>
-      </NativeBaseProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <AlertNotificationRoot>
+          <NativeBaseProvider theme={theme}>
+            <Box bg={"primary.900"} safeAreaTop />
+            <Routes />
+          </NativeBaseProvider>
+        </AlertNotificationRoot>
+      </GestureHandlerRootView>
     </>
   );
 }
