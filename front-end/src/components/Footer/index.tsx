@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Keyboard, TouchableOpacity } from "react-native";
 import { DashboardIcon } from "../DashboardIcon";
 import { NotificationIcon } from "../NotificationIcon";
+import { PerfilIcon } from "../PerfilIcon";
 import { styles } from "./styles";
 
 type Props = {
@@ -23,7 +24,7 @@ export const Footer = ({ navigation, page }: Props) => {
       <Box style={styles.container}>
         <HStack style={styles.cont}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Dashboard")}
+            onPress={() => navigation.navigate("Home")}
             activeOpacity={0.8}
           >
             <DashboardIcon
@@ -46,7 +47,7 @@ export const Footer = ({ navigation, page }: Props) => {
             onPress={() => navigation.navigate("Perfil")}
             activeOpacity={0.8}
           >
-            <NotificationIcon
+            <PerfilIcon
               color={page === "Perfil" ? "#8ADE48" : "#d4d7e0"}
               height={25}
               width={90}
