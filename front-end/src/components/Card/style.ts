@@ -3,8 +3,8 @@ import { theme } from '../../theme';
 
 export const styles = StyleSheet.create({
     card: {
-        width: 170,
-        height: 180,
+        width: 160,
+        height: 170,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
