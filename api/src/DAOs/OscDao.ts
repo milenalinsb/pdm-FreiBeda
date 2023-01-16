@@ -1,33 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-
-export interface ICadastrarOsc{
-    nome: string;
-    sigla: string;
-    data_Fundacao: Date;
-    publico_Alvo: string;
-    missao: string;
-    visao: string;
-};
-
-export interface IAtualizarOSC{
-    id: string;
-    nome: string;
-    sigla: string;
-    data_Fundacao: Date;
-    publico_Alvo: string;
-    missao: string;
-    visao: string;
-};
-
-export interface IIdOSC {
-    id: string;
-};
-
-export interface IExisteOSC {
-    nome: string;
-    sigla: string;
-};
-
+import { IId } from '../types/types.id';
+import { IAtualizarOSC, ICadastrarOsc, IExisteOSC } from '../types/types.osc';
 
 const prisma = new PrismaClient();
 
@@ -85,7 +58,7 @@ export class OscDao {
         return osc;
     };
 
-    async buscarOSCPorId({id}:IIdOSC){
+    async buscarOSCPorId({id}:IId){
 
         const osc = await prisma.oSC.findFirst({
             where:{
@@ -100,7 +73,7 @@ export class OscDao {
         return osc;
     };
 
-    async deletarOSC({id}:IIdOSC) {
+    async deletarOSC({id}:IId) {
         
        const osc = await prisma.oSC.delete({
             where:{

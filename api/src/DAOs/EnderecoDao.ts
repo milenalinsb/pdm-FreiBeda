@@ -1,34 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-
-export interface IEndereco{
-    logradouro: string;
-    numero: string;
-    cep: string;
-    bairro: string;
-    cidade: string;
-    estado: string;
-    referencia: string;
-};
-
-export interface IEnderecoExiste {
-    logradouro: string;
-    cep: string;
-};
-
-export interface IIdEndereco {
-    id: string;  
-};
-
-export interface IAtualizarEndereco{
-    id: string;
-    logradouro: string;
-    numero: string;
-    cep: string;
-    bairro: string;
-    cidade: string;
-    estado: string;
-    referencia: string;
-};
+import { IAtualizarEndereco, IEndereco, IEnderecoExiste } from '../types/types.endereco';
+import { IId } from '../types/types.id';
 
 const prisma = new PrismaClient();
 
@@ -87,7 +59,7 @@ export class EnderecoDao {
         return endereco;
     };
 
-    async buscarEnderecoPorId({id}:IIdEndereco){
+    async buscarEnderecoPorId({id}:IId){
 
         const endereco = await prisma.enderecos.findFirst({
             where:{
@@ -97,19 +69,18 @@ export class EnderecoDao {
 
         if(!endereco){
             throw new Error("Endereço não encontrado.");
-        };        
-
+        };
+        
         return endereco;
     };
 
-    async deletarEndereco({id}:IIdEndereco) {
+    async deletarEndereco({id}:IId) {
         
         const endereco = await prisma.enderecos.delete({
              where:{
                  id
              }
          });
- 
          return endereco;
      };
  
@@ -141,7 +112,6 @@ export class EnderecoDao {
                 modified_At: new Date(dataAtualizacao)
              }, 
          });
- 
          return novoEndereco;
      };
     

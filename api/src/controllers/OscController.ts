@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import { IAtualizarOSC, ICadastrarOsc, IIdOSC, OscDao } from "../DAOs/OscDao";
+import { OscDao } from "../DAOs/OscDao";
 import { verificarTokenBl } from "../services/verificarTokenBlackList.service";
+import { IId } from "../types/types.id";
+import { IAtualizarOSC, ICadastrarOsc } from "../types/types.osc";
 import { splitToken } from "../utils/splitToken";
 
 
@@ -60,7 +62,7 @@ export class OscController {
 
             await verificarTokenBl({token});
             
-            const {id} = <IIdOSC><unknown>req.params;
+            const {id} = <IId><unknown>req.params;
 
             const osc = await oscDao.buscarOSCPorId({id});
 
@@ -82,7 +84,7 @@ export class OscController {
 
             await verificarTokenBl({token});
 
-            const {id} = <IIdOSC><unknown>req.params;
+            const {id} = <IId><unknown>req.params;
 
             const {nome, sigla, data_Fundacao, publico_Alvo, missao, visao} = <IAtualizarOSC>req.body;
 
@@ -106,7 +108,7 @@ export class OscController {
 
             await verificarTokenBl({token});
             
-            const {id} = <IIdOSC><unknown>req.params;
+            const {id} = <IId><unknown>req.params;
 
             await oscDao.deletarOSC({id});
         

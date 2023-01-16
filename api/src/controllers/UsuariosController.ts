@@ -1,8 +1,10 @@
 import { TokenBlackListDao } from './../DAOs/TokenBlackListDao';
-import { IAutenticarUsuario, IEmailNomeUsuario, IEmailUsuario, IIdUsuario, IUsuario, UsuariosDao } from './../DAOs/UsuariosDao';
+import { UsuariosDao } from './../DAOs/UsuariosDao';
 import { Request, Response } from "express";
 import { splitToken } from '../utils/splitToken';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
+import { IId } from '../types/types.id';
+import { IAutenticarUsuario, IEmailNomeUsuario, IEmailUsuario, IUsuario } from '../types/types.usuarios';
 
 const usuariosDao = new UsuariosDao();
 const tokenBl = new TokenBlackListDao();
@@ -136,7 +138,7 @@ export class UsuariosController {
 
             await verificarTokenBl({token});
             
-            const {id} = <IIdUsuario><unknown>req.params;
+            const {id} = <IId><unknown>req.params;
 
             const usuario = await usuariosDao.buscarUsuarioPorId({id});
 
@@ -158,7 +160,7 @@ export class UsuariosController {
 
             await verificarTokenBl({token});
 
-            const {id} = <IIdUsuario><unknown>req.params;
+            const {id} = <IId><unknown>req.params;
 
             const {username,email} = <IEmailNomeUsuario>req.body;
 

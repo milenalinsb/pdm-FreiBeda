@@ -1,36 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-
-export interface IUsuario{
-    username: string;
-    email: string;
-    senha: string;
-};
-
-export interface IEmailUsuario{
-    email: string;
-};
-
-export interface IIdUsuario{
-    id: string;
-};
-
-export interface IAutenticarUsuario{
-    email:string;
-    senha: string;
-};
-
-export interface IAtualizarUsuario{
-    id:string;
-    username:string;
-    email:string;
-};
-
-export interface IEmailNomeUsuario{
-    username:string;
-    email:string;
-};
+import { IId } from '../types/types.id';
+import { IAtualizarUsuario, IAutenticarUsuario, IEmailUsuario, IUsuario } from '../types/types.usuarios';
 
 const prisma = new PrismaClient();
 
@@ -70,7 +42,7 @@ export class UsuariosDao{
         return usuarios;
     };
 
-    async buscarUsuarioPorId({id}:IIdUsuario) {
+    async buscarUsuarioPorId({id}:IId) {
 
         const usuario = await prisma.usuarios.findFirst({
             where:{

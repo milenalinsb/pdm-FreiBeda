@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IAtualizarEndereco, IEndereco } from '../types/types.endereco';
+import { IAtualizarGovernanca, IGovernanca } from '../types/types.governanca';
 import { IId } from '../types/types.id';
 import { splitToken } from '../utils/splitToken';
-import { EnderecoDao } from './../DAOs/EnderecoDao';
+import { GovernancaDao } from './../DAOs/GovernancaDao';
 
-const enderecoDao = new EnderecoDao();
+const governancaDao = new GovernancaDao();
 
-export class EnderecoController {
-    
-    async registroEndereco(req:Request, res:Response){
+export class GovernancaController {
+
+    async registroGovernanca(req:Request, res:Response){
 
         try {
 
@@ -17,14 +17,14 @@ export class EnderecoController {
 
             await verificarTokenBl({token});
             
-            const {logradouro, numero, cep, bairro, cidade, estado, referencia} = <IEndereco>req.body;
+            const { nome, cargo } = <IGovernanca>req.body;
 
-            await enderecoDao.enderecoExiste({logradouro, cep});
+            await governancaDao.governancaExiste({ nome, cargo });
 
-            const enderecoCadastrado = await enderecoDao.cadastrarEndereco({logradouro, numero, cep, bairro, cidade, estado, referencia});
+            const governancaCadastradad = await governancaDao.cadastrarGovernanca({ nome, cargo });
 
             return res.status(201)
-                        .json(enderecoCadastrado);
+                        .json(governancaCadastradad);
 
         } catch (error:any) {
             return res.status(400).json({
@@ -33,7 +33,7 @@ export class EnderecoController {
         };
     };
 
-    async buscarTodosEnderecos(req:Request, res:Response) {
+    async buscarTodasGovernancas(req:Request, res:Response) {
         
         try {
 
@@ -41,10 +41,10 @@ export class EnderecoController {
 
             await verificarTokenBl({token});
 
-            const enderecos = await enderecoDao.buscarEndereco();
+            const governancas = await governancaDao.buscarGovernanca();
 
             return res.status(200)
-                        .json( {enderecos} );
+                        .json( { governancas } );
             
         } catch (error:any) {
             return res.status(400).json({
@@ -53,7 +53,7 @@ export class EnderecoController {
         };
     };
 
-    async buscarEnderecoById(req:Request, res:Response) {
+    async buscarGovernancaById(req:Request, res:Response) {
 
         try {
 
@@ -63,10 +63,10 @@ export class EnderecoController {
             
             const {id} = <IId><unknown>req.params;
 
-            const endereco = await enderecoDao.buscarEnderecoPorId({id});
+            const governanca = await governancaDao.buscarGovernancaPorId({id});
 
             return res.status(200)
-                        .json( {endereco} );
+                        .json( {governanca} );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -75,7 +75,7 @@ export class EnderecoController {
         };
     };
 
-    async atualizarEndereco(req:Request, res:Response) {
+    async atualizarGovernanca(req:Request, res:Response) {
 
         try {
 
@@ -85,12 +85,12 @@ export class EnderecoController {
 
             const {id} = <IId><unknown>req.params;
 
-            const { logradouro, numero, cep, bairro, cidade, estado, referencia} = <IAtualizarEndereco>req.body;
+            const { nome,cargo } = <IAtualizarGovernanca>req.body;
 
-            const novoEndereco = await enderecoDao.atualizarEndereco({ id, logradouro, numero, cep, bairro, cidade, estado, referencia });
+            const novaGovernanca = await governancaDao.atualizarGovernanca({ id, nome, cargo });
 
             return res.status(200)
-                        .json( {Endereco:novoEndereco} );
+                        .json( {Governanca:novaGovernanca} );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -99,7 +99,7 @@ export class EnderecoController {
         };           
     };
 
-    async deletarEndereco(req:Request, res:Response) {
+    async deletarGovernanca(req:Request, res:Response) {
 
         try {
 
@@ -109,11 +109,11 @@ export class EnderecoController {
             
             const {id} = <IId><unknown>req.params;
 
-            await enderecoDao.deletarEndereco({id});
+            await governancaDao.deletarGovernanca({id});
         
             return res.status(200)
                         .json({ 
-                            message: `Endereço removido dos registros.`
+                            message: `Governança removida dos registros.`
                          });
 
         } catch (error:any) {
