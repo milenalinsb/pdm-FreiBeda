@@ -14,7 +14,7 @@ routesOsc.get('/osc/buscarOrg/:id',
                     oscController.buscarOSCById);
 routesOsc.post('/osc/cadastrarOrg',
                     verificarToken,
-                    oscController.registroOSC);
+                    oscController.registrarOSC);
 routesOsc.put('/osc/atualizarOrg/:id',
                     verificarToken,
                     oscController.atualizarOSC);

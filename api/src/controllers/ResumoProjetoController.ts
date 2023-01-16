@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IAtualizarBeneficiario, IBeneficiario } from '../types/types.beneficiario';
 import { IId } from '../types/types.id';
+import { IAtualizarResumoProjeto, IResumoProjeto } from '../types/types.resumo_projetos';
 import { splitToken } from '../utils/splitToken';
-import { BeneficiariosDao } from './../DAOs/BeneficiariosDao';
+import { ResumoProjetosDao } from './../DAOs/ResumoProjetosDao';
 
 
-const beneficiariosDao = new BeneficiariosDao();
+const resumoProjetosDao = new ResumoProjetosDao();
 
-export class BeneficiariosController {
-    
-    async registrarBeneficiarios(req:Request, res:Response){
+export class ResumoProjetosController {
+
+    async registrarResumo(req:Request, res:Response){
 
         try {
 
@@ -18,14 +18,14 @@ export class BeneficiariosController {
 
             await verificarTokenBl({token});
             
-            const { nome, data_Nascimento, sexo, cor_Declarada, is_Menor, responsavel_Menor, profissao, renda_Mensal, id_fk_projeto } = <IBeneficiario>req.body;
+            const { nome, impacto, objetivo, atividades, responsavel, valor, patrocinadores } = <IResumoProjeto>req.body;
 
-            await beneficiariosDao.beneficiarioExiste({ nome });
+            await resumoProjetosDao.resumoProjetoExiste({ nome });
 
-            const beneficiarioCadastrado = await beneficiariosDao.cadastrarBeneficiario({ nome, data_Nascimento, sexo, cor_Declarada, is_Menor, responsavel_Menor, profissao, renda_Mensal, id_fk_projeto });
+            const resumoProjeto = await resumoProjetosDao.cadastrarResumoProjeto({ nome, impacto, objetivo, atividades, responsavel, valor, patrocinadores });
 
             return res.status(201)
-                        .json(beneficiarioCadastrado);
+                        .json(resumoProjeto);
 
         } catch (error:any) {
             return res.status(400).json({
@@ -34,7 +34,7 @@ export class BeneficiariosController {
         };
     };
 
-    async buscarTodosBeneficiarios(req:Request, res:Response) {
+    async buscarTodosResumos(req:Request, res:Response) {
         
         try {
 
@@ -42,10 +42,10 @@ export class BeneficiariosController {
 
             await verificarTokenBl({token});
 
-            const beneficiarios = await beneficiariosDao.buscarBeneficiarios();
+            const resumos = await resumoProjetosDao.buscarResumoProjetos();
 
             return res.status(200)
-                        .json( {beneficiarios} );
+                        .json( {resumos} );
             
         } catch (error:any) {
             return res.status(400).json({
@@ -54,7 +54,7 @@ export class BeneficiariosController {
         };
     };
 
-    async buscarBeneficiarioById(req:Request, res:Response) {
+    async buscarResumoById(req:Request, res:Response) {
 
         try {
 
@@ -64,10 +64,10 @@ export class BeneficiariosController {
             
             const {id} = <IId><unknown>req.params;
 
-            const beneficiario = await beneficiariosDao.buscarBeneficiarioPorId({id});
+            const resumo = await resumoProjetosDao.buscarResumoProjetosPorId({id});
 
             return res.status(200)
-                        .json( {beneficiario} );
+                        .json( {resumo} );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -76,7 +76,7 @@ export class BeneficiariosController {
         };
     };
 
-    async atualizarBeneficiario(req:Request, res:Response) {
+    async atualizarResumo(req:Request, res:Response) {
 
         try {
 
@@ -86,12 +86,12 @@ export class BeneficiariosController {
 
             const {id} = <IId><unknown>req.params;
 
-            const { nome, data_Nascimento, sexo, cor_Declarada, is_Menor, responsavel_Menor, profissao, renda_Mensal, id_fk_projeto } = <IAtualizarBeneficiario>req.body;
+            const { nome, impacto, objetivo, atividades, responsavel, valor, patrocinadores } = <IAtualizarResumoProjeto>req.body;
 
-            const novoBeneficiario = await beneficiariosDao.atualizarBeneficiario({ id, nome, data_Nascimento, sexo, cor_Declarada, is_Menor, responsavel_Menor, profissao, renda_Mensal, id_fk_projeto });
+            const novoResumo = await resumoProjetosDao.atualizarResumoProjetos({ id, nome, impacto, objetivo, atividades, responsavel, valor, patrocinadores });
 
             return res.status(200)
-                        .json( {Beneficiário:novoBeneficiario} );
+                        .json( {Resumo:novoResumo} );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -100,7 +100,7 @@ export class BeneficiariosController {
         };           
     };
 
-    async deletarBeneficiario(req:Request, res:Response) {
+    async deletarResumo(req:Request, res:Response) {
 
         try {
 
@@ -110,11 +110,11 @@ export class BeneficiariosController {
             
             const {id} = <IId><unknown>req.params;
 
-            await beneficiariosDao.deletarBeneficiario({id});
+            await resumoProjetosDao.deletarResumoProjetos({id});
         
             return res.status(200)
                         .json({ 
-                            message: `Beneficiário removido dos registros.`
+                            message: `Resumo removido dos registros.`
                          });
 
         } catch (error:any) {
@@ -123,4 +123,5 @@ export class BeneficiariosController {
             });
         };
     };
+
 };

@@ -14,7 +14,7 @@ routesGovernanca.get('/governanca/buscarGovernanca/:id',
                     governancaController.buscarGovernancaById);
 routesGovernanca.post('/governanca/cadastrarGovernanca',
                     verificarToken,
-                    governancaController.registroGovernanca);
+                    governancaController.registrarGovernanca);
 routesGovernanca.put('/governanca/atualizarGovernanca/:id',
                     verificarToken,
                     governancaController.atualizarGovernanca);

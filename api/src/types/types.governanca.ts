@@ -8,4 +8,4 @@ export interface IAtualizarGovernanca {
     id: string;
     nome: string;
     cargo: string;
-}
+};

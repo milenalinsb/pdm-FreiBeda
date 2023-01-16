@@ -9,7 +9,7 @@ const enderecoDao = new EnderecoDao();
 
 export class EnderecoController {
     
-    async registroEndereco(req:Request, res:Response){
+    async registrarEndereco(req:Request, res:Response){
 
         try {
 

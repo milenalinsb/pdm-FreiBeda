@@ -19,7 +19,7 @@ routesUsuarios.get('/usuarios/buscar/:id',
                         verificarToken,
                         usuariosController.buscarUsuarioById);
 routesUsuarios.post('/usuarios/cadastrar',
-                        usuariosController.registroUsuario);
+                        usuariosController.registrarUsuario);
 routesUsuarios.delete('/usuarios/deletar',
                         verificarToken,
                         usuariosController.deletarUsuario);

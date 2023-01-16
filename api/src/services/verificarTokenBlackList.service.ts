@@ -10,4 +10,4 @@ export async function verificarTokenBl( {token}:IToken ) {
         throw new Error('Realize login novamente. Token inválido.');
     };
 
-}
+};

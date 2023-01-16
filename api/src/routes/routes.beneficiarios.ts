@@ -14,7 +14,7 @@ routeBeneficiarios.get('/beneficiarios/buscarBeneficiarios/:id',
                         beneficiariosController.buscarBeneficiarioById);
 routeBeneficiarios.post('/beneficiarios/registrarBeneficiarios',
                         verificarToken,
-                        beneficiariosController.registroBeneficiarios);
+                        beneficiariosController.registrarBeneficiarios);
 routeBeneficiarios.put('/beneficiarios/atualizarBeneficiarios/:id',
                         verificarToken,
                         beneficiariosController.atualizarBeneficiario);

@@ -9,7 +9,7 @@ const governancaDao = new GovernancaDao();
 
 export class GovernancaController {
 
-    async registroGovernanca(req:Request, res:Response){
+    async registrarGovernanca(req:Request, res:Response){
 
         try {
 

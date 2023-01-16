@@ -84,7 +84,7 @@ export class UsuariosController {
         };
     };
 
-    async registroUsuario(req:Request, res:Response){
+    async registrarUsuario(req:Request, res:Response){
 
         try {
             

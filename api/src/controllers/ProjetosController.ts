@@ -1,16 +1,38 @@
-import { Request, Response } from "express";
-import { OscDao } from "../DAOs/OscDao";
-import { verificarTokenBl } from "../services/verificarTokenBlackList.service";
-import { IId } from "../types/types.id";
-import { IAtualizarOSC, ICadastrarOsc } from "../types/types.osc";
-import { splitToken } from "../utils/splitToken";
+import { Request, Response } from 'express';
+import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
+import { IId } from '../types/types.id';
+import { IAtualizarProjetos, IProjetos } from '../types/types.projetos';
+import { splitToken } from '../utils/splitToken';
+import { ProjetosDao } from './../DAOs/ProjetosDao';
 
 
-const oscDao = new OscDao();
+const projetosDao = new ProjetosDao();
 
-export class OscController {
+export class ProjetosController {
 
-    async buscarTodasOSC(req:Request, res:Response) {
+    async registrarProjeto(req:Request, res:Response){
+
+        try {
+
+            const token = splitToken(req.headers.authorization);
+
+            await verificarTokenBl({token});
+            
+            const { id_fk_osc, id_fk_resumo_Projeto } = <IProjetos>req.body;
+
+            const projeto = await projetosDao.cadastrarProjeto({ id_fk_osc, id_fk_resumo_Projeto });
+
+            return res.status(201)
+                        .json(projeto);
+
+        } catch (error:any) {
+            return res.status(400).json({
+                message: error.message
+            });
+        };
+    };
+
+    async buscarTodosProjetos(req:Request, res:Response) {
         
         try {
 
@@ -18,10 +40,10 @@ export class OscController {
 
             await verificarTokenBl({token});
 
-            const osc = await oscDao.buscarOSC();
+            const projetos = await projetosDao.buscarProjetos();
 
             return res.status(200)
-                        .json( {osc} );
+                        .json( {projetos} );
             
         } catch (error:any) {
             return res.status(400).json({
@@ -30,31 +52,7 @@ export class OscController {
         };
     };
 
-    async registrarOSC(req:Request, res:Response){
-
-        try {
-
-            const token = splitToken(req.headers.authorization);
-
-            await verificarTokenBl({token});
-            
-            const {nome, sigla, data_Fundacao, publico_Alvo, missao, visao} = <ICadastrarOsc>req.body;
-
-            await oscDao.oscExiste({nome, sigla});
-
-            const oscCadastrada = await oscDao.cadastrarOSC({nome, sigla, data_Fundacao, publico_Alvo, missao, visao});
-
-            return res.status(201)
-                        .json(oscCadastrada);
-
-        } catch (error:any) {
-            return res.status(400).json({
-                message: error.message
-            });
-        }
-    };
-
-    async buscarOSCById(req:Request, res:Response) {
+    async buscarProjetoById(req:Request, res:Response) {
 
         try {
 
@@ -64,10 +62,10 @@ export class OscController {
             
             const {id} = <IId><unknown>req.params;
 
-            const osc = await oscDao.buscarOSCPorId({id});
+            const projeto = await projetosDao.buscarProjetosPorId({id});
 
             return res.status(200)
-                        .json( {osc} );
+                        .json( {projeto} );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -76,7 +74,7 @@ export class OscController {
         };
     };
 
-    async atualizarOSC(req:Request, res:Response) {
+    async atualizarProjeto(req:Request, res:Response) {
 
         try {
 
@@ -86,12 +84,12 @@ export class OscController {
 
             const {id} = <IId><unknown>req.params;
 
-            const {nome, sigla, data_Fundacao, publico_Alvo, missao, visao} = <IAtualizarOSC>req.body;
+            const { id_fk_osc, id_fk_resumo_Projeto } = <IAtualizarProjetos>req.body;
 
-            const novaOSC = await oscDao.atualizarOSC({id,nome, sigla, data_Fundacao, publico_Alvo, missao, visao});
+            const novoProjeto = await projetosDao.atualizarProjetos({ id, id_fk_osc, id_fk_resumo_Projeto });
 
             return res.status(200)
-                        .json( {OSC:novaOSC} );
+                        .json( {Projeto:novoProjeto} );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -100,7 +98,7 @@ export class OscController {
         };           
     };
 
-    async deletarOSC(req:Request, res:Response) {
+    async deletarProjeto(req:Request, res:Response) {
 
         try {
 
@@ -110,11 +108,11 @@ export class OscController {
             
             const {id} = <IId><unknown>req.params;
 
-            await oscDao.deletarOSC({id});
+            await projetosDao.deletarProjeto({id});
         
             return res.status(200)
                         .json({ 
-                            message: `OSC removida dos registros.`
+                            message: `Projeto removido dos registros.`
                          });
 
         } catch (error:any) {
@@ -123,5 +121,6 @@ export class OscController {
             });
         };
     };
-    
-}
+
+
+};

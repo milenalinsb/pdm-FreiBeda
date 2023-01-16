@@ -14,7 +14,7 @@ routesEndereco.get('/endereco/buscarEndereco/:id',
                         enderecoController.buscarEnderecoById);
 routesEndereco.post('/endereco/cadastrarEndereco',
                         verificarToken,
-                        enderecoController.registroEndereco);
+                        enderecoController.registrarEndereco);
 routesEndereco.put('/endereco/atualizarEndereco/:id',
                         verificarToken,
                         enderecoController.atualizarEndereco);
