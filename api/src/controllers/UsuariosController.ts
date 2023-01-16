@@ -1,8 +1,10 @@
 import { TokenBlackListDao } from './../DAOs/TokenBlackListDao';
-import { IAutenticarUsuario, IEmailNomeUsuario, IEmailUsuario, IIdUsuario, IUsuario, UsuariosDao } from './../DAOs/UsuariosDao';
+import { UsuariosDao } from './../DAOs/UsuariosDao';
 import { Request, Response } from "express";
 import { splitToken } from '../utils/splitToken';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
+import { IId } from '../types/types.id';
+import { IAutenticarUsuario, IEmailNomeUsuario, IEmailUsuario, IUsuario } from '../types/types.usuarios';
 
 const usuariosDao = new UsuariosDao();
 const tokenBl = new TokenBlackListDao();
@@ -31,7 +33,7 @@ export class UsuariosController {
                 message: error.message
             });
         };
-    }
+    };
 
     async logout(req:Request, res:Response){
 
@@ -59,15 +61,16 @@ export class UsuariosController {
             return res.status(400).json({
                 message: error.message
             });
-        }
-
-    }
+        };
+    };
 
     async buscarTodosUsuarios(req:Request, res:Response) {
         
         try {
 
-            await verificarTokenBl(req.headers.authorization);
+            const token = splitToken(req.headers.authorization);
+
+            await verificarTokenBl({token});
 
             const usuarios = await usuariosDao.buscarUsuarios();
 
@@ -81,7 +84,7 @@ export class UsuariosController {
         };
     };
 
-    async registroUsuario(req:Request, res:Response){
+    async registrarUsuario(req:Request, res:Response){
 
         try {
             
@@ -105,7 +108,9 @@ export class UsuariosController {
 
         try {
 
-            await verificarTokenBl(req.headers.authorization);
+            const token = splitToken(req.headers.authorization);
+
+            await verificarTokenBl({token});
             
             const {email} = <IEmailUsuario>req.body;
 
@@ -129,9 +134,11 @@ export class UsuariosController {
 
         try {
 
-            await verificarTokenBl(req.headers.authorization);
+            const token = splitToken(req.headers.authorization)
+
+            await verificarTokenBl({token});
             
-            const {id} = <IIdUsuario><unknown>req.params;
+            const {id} = <IId><unknown>req.params;
 
             const usuario = await usuariosDao.buscarUsuarioPorId({id});
 
@@ -143,16 +150,17 @@ export class UsuariosController {
                 message: error.message
             });
         };
-    
     };
 
     async atualizarUsuario(req:Request, res:Response) {
 
         try {
 
-            await verificarTokenBl(req.headers.authorization);
+            const token = splitToken(req.headers.authorization);
 
-            const {id} = <IIdUsuario><unknown>req.params;
+            await verificarTokenBl({token});
+
+            const {id} = <IId><unknown>req.params;
 
             const {username,email} = <IEmailNomeUsuario>req.body;
 
