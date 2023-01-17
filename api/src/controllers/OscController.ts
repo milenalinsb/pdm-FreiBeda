@@ -33,8 +33,8 @@ export class OscController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
-
+            const token =<string> req.headers.authorization;
+            
             await verificarTokenBl({token});
             
             const {nome, sigla, data_Fundacao, publico_Alvo, missao, visao} = <ICadastrarOsc>req.body;
