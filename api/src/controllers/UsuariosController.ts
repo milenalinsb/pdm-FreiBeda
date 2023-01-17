@@ -1,179 +1,160 @@
-import { TokenBlackListDao } from './../DAOs/TokenBlackListDao';
-import { UsuariosDao } from './../DAOs/UsuariosDao';
-import { Request, Response } from "express";
-import { splitToken } from '../utils/splitToken';
-import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IId } from '../types/types.id';
-import { IAutenticarUsuario, IEmailNomeUsuario, IEmailUsuario, IUsuario } from '../types/types.usuarios';
+import { Request, Response } from 'express'
+import { verificarTokenBl } from '../services/verificarTokenBlackList.service'
+import { IId } from '../types/types.id'
+import {
+    IAutenticarUsuario,
+    IEmailNomeUsuario,
+    IEmailUsuario,
+    IUsuario,
+} from '../types/types.usuarios'
+import { splitToken } from '../utils/splitToken'
+import { TokenBlackListDao } from './../DAOs/TokenBlackListDao'
+import { UsuariosDao } from './../DAOs/UsuariosDao'
 
-const usuariosDao = new UsuariosDao();
-const tokenBl = new TokenBlackListDao();
+const usuariosDao = new UsuariosDao()
+const tokenBl = new TokenBlackListDao()
 
 export class UsuariosController {
-
-    async login(req:Request, res:Response){
-        
+    async login(req: Request, res: Response) {
         try {
+            const { email, senha } = <IAutenticarUsuario>req.body
 
-            const {email, senha} = <IAutenticarUsuario>req.body;
+            const token = await usuariosDao.autenticarUsuario({ email, senha })
 
-            const token = await usuariosDao.autenticarUsuario({email,senha});
+            const usuario = await usuariosDao.buscarUsuario({ email })
 
-            const usuario = await usuariosDao.buscarUsuario({email});
-
-            return res.status(201)
-                        .set('Authorization', token)
-                        .json({
-                            token: token,
-                            id: usuario.id
-                        });
-            
-        } catch (error:any) {
+            return res.status(201).set('Authorization', token).json({
+                token: token,
+                id: usuario.id,
+            })
+        } catch (error: any) {
             return res.status(400).json({
-                message: error.message
-            });
-        };
-    };
-
-    async logout(req:Request, res:Response){
-
-        try {
-
-            const header = req.headers.authorization;
-
-            if(!header) {
-                return res.status(403)
-                            .json({
-                                message:'Não há token.'
-                            });
-            };
-        
-            const token = splitToken(header);
-
-            await tokenBl.inserirToken({token});
-
-            return res.status(200)
-                        .json({
-                            message:'Logout realizado.'
-                        });
-
-        } catch (error:any) {
-            return res.status(400).json({
-                message: error.message
-            });
-        };
-    };
-
-    async buscarTodosUsuarios(req:Request, res:Response) {
-        
-        try {
-
-            const token = splitToken(req.headers.authorization);
-
-            await verificarTokenBl({token});
-
-            const usuarios = await usuariosDao.buscarUsuarios();
-
-            return res.status(200)
-                        .json( {usuarios} );
-            
-        } catch (error:any) {
-            return res.status(400).json({
-                message: error.message
-            });
-        };
-    };
-
-    async registrarUsuario(req:Request, res:Response){
-
-        try {
-            
-            const {username, email, senha} = <IUsuario>req.body;
-
-            await usuariosDao.usuarioExiste({email});
-
-            const usuarioCadastrado = await usuariosDao.cadastrarUsuario({username,email,senha});
-
-            return res.status(201)
-                        .json(usuarioCadastrado);
-
-        } catch (error:any) {
-            return res.status(400).json({
-                message: error.message
-            });
+                message: error.message,
+            })
         }
-    };
+    }
 
-    async deletarUsuario(req:Request, res:Response) {
-
+    async logout(req: Request, res: Response) {
         try {
+            const header = req.headers.authorization
 
-            const token = splitToken(req.headers.authorization);
+            if (!header) {
+                return res.status(403).json({
+                    message: 'Não há token.',
+                })
+            }
 
-            await verificarTokenBl({token});
-            
-            const {email} = <IEmailUsuario>req.body;
+            const token = splitToken(header)
 
-            const usuario = await usuariosDao.buscarUsuario({email});
+            await tokenBl.inserirToken({ token })
 
-            await usuariosDao.deletarUsuario({email});
-        
-            return res.status(200)
-                        .json({ 
-                            message: `Usuário com id:${usuario.id} deletado.`
-                         });
-
-        } catch (error:any) {
+            return res.status(200).json({
+                message: 'Logout realizado.',
+            })
+        } catch (error: any) {
             return res.status(400).json({
-                message: error.message
-            });
-        };
-    };
+                message: error.message,
+            })
+        }
+    }
 
-    async buscarUsuarioById(req:Request, res:Response) {
-
+    async buscarTodosUsuarios(req: Request, res: Response) {
         try {
-
             const token = splitToken(req.headers.authorization)
 
-            await verificarTokenBl({token});
-            
-            const {id} = <IId><unknown>req.params;
+            await verificarTokenBl({ token })
 
-            const usuario = await usuariosDao.buscarUsuarioPorId({id});
+            const usuarios = await usuariosDao.buscarUsuarios()
 
-            return res.status(200)
-                        .json( {usuario} );
-
-        } catch (error:any) {
+            return res.status(200).json({ usuarios })
+        } catch (error: any) {
             return res.status(400).json({
-                message: error.message
-            });
-        };
-    };
+                message: error.message,
+            })
+        }
+    }
 
-    async atualizarUsuario(req:Request, res:Response) {
-
+    async registrarUsuario(req: Request, res: Response) {
         try {
+            const { username, email, senha } = <IUsuario>req.body
 
-            const token = splitToken(req.headers.authorization);
+            await usuariosDao.usuarioExiste({ email })
 
-            await verificarTokenBl({token});
+            const usuarioCadastrado = await usuariosDao.cadastrarUsuario({
+                username,
+                email,
+                senha,
+            })
 
-            const {id} = <IId><unknown>req.params;
-
-            const {username,email} = <IEmailNomeUsuario>req.body;
-
-            const novoUsuario = await usuariosDao.atualizarUsuario({id,username,email});
-
-            return res.status(200)
-                        .json( {usuario:novoUsuario} );
-
-        } catch (error:any) {
+            return res.status(201).json({ message: 'Usuário criado' })
+        } catch (error: any) {
             return res.status(400).json({
-                message: error.message
-            });
-        };           
-    };
+                message: error.message,
+            })
+        }
+    }
 
+    async deletarUsuario(req: Request, res: Response) {
+        try {
+            const token = splitToken(req.headers.authorization)
+
+            await verificarTokenBl({ token })
+
+            const { email } = <IEmailUsuario>req.body
+
+            const usuario = await usuariosDao.buscarUsuario({ email })
+
+            await usuariosDao.deletarUsuario({ email })
+
+            return res.status(200).json({
+                message: `Usuário com id:${usuario.id} deletado.`,
+            })
+        } catch (error: any) {
+            return res.status(400).json({
+                message: error.message,
+            })
+        }
+    }
+
+    async buscarUsuarioById(req: Request, res: Response) {
+        try {
+            const token = splitToken(req.headers.authorization)
+
+            await verificarTokenBl({ token })
+
+            const { id } = <IId>(<unknown>req.params)
+
+            const usuario = await usuariosDao.buscarUsuarioPorId({ id })
+
+            return res.status(200).json({ usuario })
+        } catch (error: any) {
+            return res.status(400).json({
+                message: error.message,
+            })
+        }
+    }
+
+    async atualizarUsuario(req: Request, res: Response) {
+        try {
+            const token = splitToken(req.headers.authorization)
+
+            await verificarTokenBl({ token })
+
+            const { id } = <IId>(<unknown>req.params)
+
+            const { username, email } = <IEmailNomeUsuario>req.body
+
+            const novoUsuario = await usuariosDao.atualizarUsuario({
+                id,
+                username,
+                email,
+            })
+
+            return res.status(200).json({ usuario: novoUsuario })
+        } catch (error: any) {
+            return res.status(400).json({
+                message: error.message,
+            })
+        }
+    }
 }

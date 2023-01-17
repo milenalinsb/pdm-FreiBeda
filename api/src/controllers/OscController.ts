@@ -5,7 +5,6 @@ import { IId } from "../types/types.id";
 import { IAtualizarOSC, ICadastrarOsc } from "../types/types.osc";
 import { splitToken } from "../utils/splitToken";
 
-
 const oscDao = new OscDao();
 
 export class OscController {
