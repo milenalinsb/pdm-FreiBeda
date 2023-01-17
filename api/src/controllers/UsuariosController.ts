@@ -1,3 +1,4 @@
+import { hash } from 'bcrypt'
 import { Request, Response } from 'express'
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service'
 import { IId } from '../types/types.id'
@@ -7,7 +8,6 @@ import {
     IEmailUsuario,
     IUsuario,
 } from '../types/types.usuarios'
-import { splitToken } from '../utils/splitToken'
 import { TokenBlackListDao } from './../DAOs/TokenBlackListDao'
 import { UsuariosDao } from './../DAOs/UsuariosDao'
 
@@ -44,7 +44,7 @@ export class UsuariosController {
                 })
             }
 
-            const token = splitToken(header)
+            const token = header
 
             await tokenBl.inserirToken({ token })
 
@@ -60,7 +60,7 @@ export class UsuariosController {
 
     async buscarTodosUsuarios(req: Request, res: Response) {
         try {
-            const token = splitToken(req.headers.authorization)
+            const token = <string>req.headers.authorization
 
             await verificarTokenBl({ token })
 
@@ -96,18 +96,18 @@ export class UsuariosController {
 
     async deletarUsuario(req: Request, res: Response) {
         try {
-            const token = splitToken(req.headers.authorization)
+            const token = <string>req.headers.authorization
 
             await verificarTokenBl({ token })
 
             const { email } = <IEmailUsuario>req.body
 
-            const usuario = await usuariosDao.buscarUsuario({ email })
+            const { id } = await usuariosDao.buscarUsuario({ email })
 
-            await usuariosDao.deletarUsuario({ email })
+            await usuariosDao.deletarUsuario({ id })
 
             return res.status(200).json({
-                message: `Usuário com id:${usuario.id} deletado.`,
+                message: `Usuário com id:${id} deletado.`,
             })
         } catch (error: any) {
             return res.status(400).json({
@@ -118,7 +118,7 @@ export class UsuariosController {
 
     async buscarUsuarioById(req: Request, res: Response) {
         try {
-            const token = splitToken(req.headers.authorization)
+            const token = <string>req.headers.authorization
 
             await verificarTokenBl({ token })
 
@@ -136,21 +136,24 @@ export class UsuariosController {
 
     async atualizarUsuario(req: Request, res: Response) {
         try {
-            const token = splitToken(req.headers.authorization)
+            const token = <string>req.headers.authorization
 
             await verificarTokenBl({ token })
 
             const { id } = <IId>(<unknown>req.params)
 
-            const { username, email } = <IEmailNomeUsuario>req.body
+            const dados = <IEmailNomeUsuario>req.body
+
+            if (typeof dados.senha != 'undefined') {
+                dados.senha = await hash(dados.senha, 10)
+            }
 
             const novoUsuario = await usuariosDao.atualizarUsuario({
                 id,
-                username,
-                email,
+                dados,
             })
 
-            return res.status(200).json({ usuario: novoUsuario })
+            return res.status(200).json({ message: "Usuário atualizado" })
         } catch (error: any) {
             return res.status(400).json({
                 message: error.message,
