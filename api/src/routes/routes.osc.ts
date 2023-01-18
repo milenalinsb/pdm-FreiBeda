@@ -1,6 +1,8 @@
 import { OscController } from './../controllers/OscController';
 import { Router } from 'express';
 import { verificarToken } from '../middlewares/verificarTokenJWT';
+import { makeValidateBody } from 'express-class-validator';
+import { CadastrarOSCDTO,AtualizarOSCDTO } from "../validators/Osc.dtos";
 
 const routesOsc = Router();
 
@@ -14,9 +16,11 @@ routesOsc.get('/osc/buscarOrg/:id',
                     oscController.buscarOSCById);
 routesOsc.post('/osc/cadastrarOrg',
                     verificarToken,
+                    makeValidateBody(CadastrarOSCDTO),
                     oscController.registrarOSC);
 routesOsc.put('/osc/atualizarOrg/:id',
                     verificarToken,
+                    makeValidateBody(AtualizarOSCDTO),
                     oscController.atualizarOSC);
 routesOsc.delete('/osc/deletarOsc/:id',
                     verificarToken,

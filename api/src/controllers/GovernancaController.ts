@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IAtualizarGovernanca, IGovernanca } from '../types/types.governanca';
+import { IAtualizarGovernanca, IAtualizarGovernancaData, IGovernanca } from '../types/types.governanca';
 import { IId } from '../types/types.id';
-import { splitToken } from '../utils/splitToken';
 import { GovernancaDao } from './../DAOs/GovernancaDao';
 
 const governancaDao = new GovernancaDao();
@@ -13,7 +12,7 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             
@@ -24,7 +23,7 @@ export class GovernancaController {
             const governancaCadastradad = await governancaDao.cadastrarGovernanca({ nome, cargo });
 
             return res.status(201)
-                        .json(governancaCadastradad);
+                        .json({message: `Governança cadastrada.`});
 
         } catch (error:any) {
             return res.status(400).json({
@@ -37,7 +36,7 @@ export class GovernancaController {
         
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token =  <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
@@ -57,7 +56,7 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization)
+            const token =  <string>req.headers.authorization
 
             await verificarTokenBl({token});
             
@@ -79,18 +78,20 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token =  <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
             const {id} = <IId><unknown>req.params;
 
-            const { nome,cargo } = <IAtualizarGovernanca>req.body;
+            const dados = <IAtualizarGovernancaData>req.body;
 
-            const novaGovernanca = await governancaDao.atualizarGovernanca({ id, nome, cargo });
+            const novaGovernanca = await governancaDao.atualizarGovernanca({ id, dados });
 
             return res.status(200)
-                        .json( {Governanca:novaGovernanca} );
+                        .json( { 
+                            message: `Governança atualizada.`
+                         } );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -103,7 +104,7 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token =  <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             

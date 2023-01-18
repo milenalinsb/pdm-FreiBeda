@@ -1,6 +1,8 @@
 import { BeneficiariosController } from './../controllers/BeneficiariosController';
 import { Router } from 'express';
 import { verificarToken } from '../middlewares/verificarTokenJWT';
+import { makeValidateBody } from 'express-class-validator';
+import { RegistrarBeneficiariosDTO } from '../validators/Beneficiario.dtos';
 
 const routeBeneficiarios = Router();
 
@@ -13,6 +15,7 @@ routeBeneficiarios.get('/beneficiarios/buscarBeneficiarios/:id',
                         verificarToken,
                         beneficiariosController.buscarBeneficiarioById);
 routeBeneficiarios.post('/beneficiarios/registrarBeneficiarios',
+                        makeValidateBody(RegistrarBeneficiariosDTO),
                         verificarToken,
                         beneficiariosController.registrarBeneficiarios);
 routeBeneficiarios.put('/beneficiarios/atualizarBeneficiarios/:id',

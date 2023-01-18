@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IAtualizarEndereco, IEndereco } from '../types/types.endereco';
+import { IAtualizarEnderecoData, IEndereco } from '../types/types.endereco';
 import { IId } from '../types/types.id';
-import { splitToken } from '../utils/splitToken';
 import { EnderecoDao } from './../DAOs/EnderecoDao';
 
 const enderecoDao = new EnderecoDao();
@@ -13,7 +12,7 @@ export class EnderecoController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             
@@ -24,7 +23,7 @@ export class EnderecoController {
             const enderecoCadastrado = await enderecoDao.cadastrarEndereco({logradouro, numero, cep, bairro, cidade, estado, referencia});
 
             return res.status(201)
-                        .json(enderecoCadastrado);
+                        .json({message: `Endereço cadastrado.`});
 
         } catch (error:any) {
             return res.status(400).json({
@@ -37,7 +36,7 @@ export class EnderecoController {
         
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
@@ -57,7 +56,7 @@ export class EnderecoController {
 
         try {
 
-            const token = splitToken(req.headers.authorization)
+            const token = <string>req.headers.authorization
 
             await verificarTokenBl({token});
             
@@ -79,18 +78,20 @@ export class EnderecoController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
             const {id} = <IId><unknown>req.params;
 
-            const { logradouro, numero, cep, bairro, cidade, estado, referencia} = <IAtualizarEndereco>req.body;
+            const dados = <IAtualizarEnderecoData>req.body;
 
-            const novoEndereco = await enderecoDao.atualizarEndereco({ id, logradouro, numero, cep, bairro, cidade, estado, referencia });
+            const novoEndereco = await enderecoDao.atualizarEndereco({ id, dados });
 
             return res.status(200)
-                        .json( {Endereco:novoEndereco} );
+                        .json( { 
+                            message: `Endereço atualizado.`
+                         } );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -103,7 +104,7 @@ export class EnderecoController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             

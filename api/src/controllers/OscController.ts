@@ -2,9 +2,8 @@ import { Request, Response } from "express";
 import { OscDao } from "../DAOs/OscDao";
 import { verificarTokenBl } from "../services/verificarTokenBlackList.service";
 import { IId } from "../types/types.id";
-import { IAtualizarOSC, ICadastrarOsc } from "../types/types.osc";
+import { IAtualizarOSC, IAtualizarOSCData, ICadastrarOsc } from "../types/types.osc";
 import { splitToken } from "../utils/splitToken";
-
 
 const oscDao = new OscDao();
 
@@ -13,8 +12,8 @@ export class OscController {
     async buscarTodasOSC(req:Request, res:Response) {
         
         try {
-
-            const token = splitToken(req.headers.authorization);
+          
+            const token =<string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
@@ -34,8 +33,8 @@ export class OscController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
-
+            const token =<string> req.headers.authorization;
+            
             await verificarTokenBl({token});
             
             const {nome, sigla, data_Fundacao, publico_Alvo, missao, visao} = <ICadastrarOsc>req.body;
@@ -45,7 +44,7 @@ export class OscController {
             const oscCadastrada = await oscDao.cadastrarOSC({nome, sigla, data_Fundacao, publico_Alvo, missao, visao});
 
             return res.status(201)
-                        .json(oscCadastrada);
+                        .json({message: 'Organização criada'});
 
         } catch (error:any) {
             return res.status(400).json({
@@ -58,8 +57,8 @@ export class OscController {
 
         try {
 
-            const token = splitToken(req.headers.authorization)
-
+            const token = <string>req.headers.authorization;
+            
             await verificarTokenBl({token});
             
             const {id} = <IId><unknown>req.params;
@@ -77,21 +76,21 @@ export class OscController {
     };
 
     async atualizarOSC(req:Request, res:Response) {
-
+        
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
             const {id} = <IId><unknown>req.params;
 
-            const {nome, sigla, data_Fundacao, publico_Alvo, missao, visao} = <IAtualizarOSC>req.body;
+            const dados = <IAtualizarOSCData>req.body;
 
-            const novaOSC = await oscDao.atualizarOSC({id,nome, sigla, data_Fundacao, publico_Alvo, missao, visao});
+            const novaOSC = await oscDao.atualizarOSC({id,dados});
 
             return res.status(200)
-                        .json( {OSC:novaOSC} );
+                        .json( { message: `Organização atualizada.`} );
 
         } catch (error:any) {
             return res.status(400).json({
@@ -104,7 +103,7 @@ export class OscController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             

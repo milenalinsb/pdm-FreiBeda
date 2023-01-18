@@ -86,15 +86,12 @@ export class OscDao {
 
     async atualizarOSC({
         id,
-        nome,
-        sigla,
-        data_Fundacao,
-        publico_Alvo,
-        missao,
-        visao
+        dados
     }:IAtualizarOSC){
 
-        const data = new Date(data_Fundacao);
+        if (typeof dados.data_Fundacao != 'undefined') {
+            dados.data_Fundacao = new Date(dados.data_Fundacao as Date);
+        }
 
         const dataAtualizacao = Date.now();
 
@@ -103,12 +100,7 @@ export class OscDao {
                 id
             },
             data: {
-                nome, 
-                sigla,
-                data_Fundacao: data,
-                publico_Alvo,
-                missao,
-                visao,
+                ...dados,
                 modified_At: new Date(dataAtualizacao)
             }, 
         });
