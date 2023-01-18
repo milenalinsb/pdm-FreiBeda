@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
 import { IAtualizarGovernanca, IGovernanca } from '../types/types.governanca';
 import { IId } from '../types/types.id';
-import { splitToken } from '../utils/splitToken';
 import { GovernancaDao } from './../DAOs/GovernancaDao';
 
 const governancaDao = new GovernancaDao();
@@ -13,7 +12,7 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             
@@ -24,7 +23,7 @@ export class GovernancaController {
             const governancaCadastradad = await governancaDao.cadastrarGovernanca({ nome, cargo });
 
             return res.status(201)
-                        .json(governancaCadastradad);
+                        .json({message: `Governança cadastrada.`});
 
         } catch (error:any) {
             return res.status(400).json({
@@ -37,7 +36,7 @@ export class GovernancaController {
         
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token =  <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
@@ -57,7 +56,7 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization)
+            const token =  <string>req.headers.authorization
 
             await verificarTokenBl({token});
             
@@ -79,7 +78,7 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token =  <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
@@ -103,7 +102,7 @@ export class GovernancaController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token =  <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             
