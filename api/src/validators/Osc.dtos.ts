@@ -1,4 +1,4 @@
-import { IsISO8601, IsNotEmpty, IsString,IsOptional } from 'class-validator'
+import { IsISO8601, IsNotEmpty, IsString,IsOptional } from 'class-validator';
 
 export class CadastrarOSCDTO {
     @IsString()
