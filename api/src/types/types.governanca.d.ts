@@ -6,6 +6,11 @@ export interface IGovernanca {
 
 export interface IAtualizarGovernanca {
     id: string;
-    nome: string;
-    cargo: string;
+    dados:IAtualizarGovernancaData
+};
+
+export interface IAtualizarGovernancaData {
+    id?: string;
+    nome?: string;
+    cargo?: string;
 };

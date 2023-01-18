@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IAtualizarGovernanca, IGovernanca } from '../types/types.governanca';
+import { IAtualizarGovernanca, IAtualizarGovernancaData, IGovernanca } from '../types/types.governanca';
 import { IId } from '../types/types.id';
 import { GovernancaDao } from './../DAOs/GovernancaDao';
 
@@ -84,12 +84,14 @@ export class GovernancaController {
 
             const {id} = <IId><unknown>req.params;
 
-            const { nome,cargo } = <IAtualizarGovernanca>req.body;
+            const dados = <IAtualizarGovernancaData>req.body;
 
-            const novaGovernanca = await governancaDao.atualizarGovernanca({ id, nome, cargo });
+            const novaGovernanca = await governancaDao.atualizarGovernanca({ id, dados });
 
             return res.status(200)
-                        .json( {Governanca:novaGovernanca} );
+                        .json( { 
+                            message: `Governança atualizada.`
+                         } );
 
         } catch (error:any) {
             return res.status(400).json({

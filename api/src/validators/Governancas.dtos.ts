@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString,IsNumberString,IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString ,IsOptional } from 'class-validator';
 
 export class RegistrarGovernancaDTO {
     @IsString()
@@ -7,5 +7,15 @@ export class RegistrarGovernancaDTO {
 
     @IsString()
     @IsNotEmpty({ message: 'Esse campo e obrigatório' })
+    cargo!: string
+}
+
+export class AtualizarGovernancaDTO {
+    @IsString()
+    @IsOptional()
+    nome!: string
+
+    @IsString()
+    @IsOptional()
     cargo!: string
 }

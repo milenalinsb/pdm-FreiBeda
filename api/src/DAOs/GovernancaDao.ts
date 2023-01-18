@@ -72,7 +72,7 @@ async deletarGovernanca({id}:IId) {
      return governanca;
  };
 
- async atualizarGovernanca({ id, nome, cargo }:IAtualizarGovernanca){
+ async atualizarGovernanca({ id, dados }:IAtualizarGovernanca){
 
      const dataAtualizacao = Date.now();
 
@@ -81,8 +81,7 @@ async deletarGovernanca({id}:IId) {
              id
          },
          data: {
-            nome,
-            cargo,
+            ...dados,
             modified_At: new Date(dataAtualizacao)
          }, 
      });
