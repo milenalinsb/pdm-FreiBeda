@@ -86,13 +86,7 @@ export class EnderecoDao {
  
      async atualizarEndereco({
         id,
-        logradouro,
-        numero,
-        cep,
-        bairro,
-        cidade,
-        estado,
-        referencia
+        dados
      }:IAtualizarEndereco){
   
          const dataAtualizacao = Date.now();
@@ -102,13 +96,7 @@ export class EnderecoDao {
                  id
              },
              data: {
-                logradouro,
-                numero,
-                cep,
-                bairro,
-                cidade,
-                estado,
-                referencia,
+                ...dados,
                 modified_At: new Date(dataAtualizacao)
              }, 
          });

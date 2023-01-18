@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IAtualizarEndereco, IEndereco } from '../types/types.endereco';
+import { IAtualizarEnderecoData, IEndereco } from '../types/types.endereco';
 import { IId } from '../types/types.id';
 import { EnderecoDao } from './../DAOs/EnderecoDao';
 
@@ -84,12 +84,14 @@ export class EnderecoController {
 
             const {id} = <IId><unknown>req.params;
 
-            const { logradouro, numero, cep, bairro, cidade, estado, referencia} = <IAtualizarEndereco>req.body;
+            const dados = <IAtualizarEnderecoData>req.body;
 
-            const novoEndereco = await enderecoDao.atualizarEndereco({ id, logradouro, numero, cep, bairro, cidade, estado, referencia });
+            const novoEndereco = await enderecoDao.atualizarEndereco({ id, dados });
 
             return res.status(200)
-                        .json( {Endereco:novoEndereco} );
+                        .json( { 
+                            message: `Endereço atualizado.`
+                         } );
 
         } catch (error:any) {
             return res.status(400).json({

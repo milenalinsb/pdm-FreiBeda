@@ -15,11 +15,15 @@ export interface IEnderecoExiste {
 
 export interface IAtualizarEndereco {
     id: string
-    logradouro: string
-    numero: string
-    cep: string
-    bairro: string
-    cidade: string
-    estado: string
-    referencia: string
+    dados:IAtualizarEnderecoData
+}
+
+export interface IAtualizarEnderecoData {
+    logradouro?: string
+    numero?: string
+    cep?: string
+    bairro?: string
+    cidade?: string
+    estado?: string
+    referencia?: string
 }
