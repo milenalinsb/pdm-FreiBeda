@@ -13,8 +13,9 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 2,
     },
     infoProfile: {
+        flex: 0.9,
         height: 48,
-        marginRight: 20
+        marginRight: 25
     },
     nome: {
         color: "#212121",

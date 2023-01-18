@@ -4,6 +4,7 @@ import { Splash } from "../screens/Splash";
 import { Login } from "../screens/Login";
 import { Dashboard } from "../screens/Dashboard";
 import { Notifications } from "../screens/Notifications";
+import { Governanca } from "../screens/Governanca";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export const StackNavigator = () => {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Dashboard" component={Dashboard} />
             <Stack.Screen name="Notifications" component={Notifications} />
+            <Stack.Screen name="Governanca" component={Governanca} />
         </Stack.Navigator>
     );
 };
