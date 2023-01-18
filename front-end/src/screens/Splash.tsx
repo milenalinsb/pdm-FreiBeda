@@ -11,7 +11,7 @@ export const Splash = ({ navigation }: NavigationProps) => {
       if (token !== null) {
         navigation.navigate("Dashboard");
       } else {
-        navigation.navigate("Governanca");
+        navigation.navigate("PerfilOSC");
       }
     }, 100);
     return () => clearTimeout(timer);
