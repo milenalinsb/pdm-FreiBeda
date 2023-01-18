@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import moment from 'moment';
 import { IAtualizarBeneficiario, IBeneficiario, IBeneficiarioExiste } from '../types/types.beneficiario';
 import { IId } from '../types/types.id';
 
@@ -34,13 +35,12 @@ async cadastrarBeneficiario({
     id_fk_projeto
 }:IBeneficiario){
 
-    const dataNascimento = new Date(data_Nascimento);
     const isMenor = Boolean(is_Menor);
 
     const beneficiario = await prisma.beneficiarios.create({
         data:{
             nome,
-            data_Nascimento: dataNascimento,
+            data_Nascimento: moment( data_Nascimento, 'YYYY-MM-DD').toDate(),
             sexo,
             cor_Declarada,
             is_Menor: isMenor,

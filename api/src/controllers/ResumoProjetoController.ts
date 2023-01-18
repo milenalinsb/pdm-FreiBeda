@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
 import { IId } from '../types/types.id';
 import { IAtualizarResumoProjeto, IResumoProjeto } from '../types/types.resumo_projetos';
-import { splitToken } from '../utils/splitToken';
 import { ResumoProjetosDao } from './../DAOs/ResumoProjetosDao';
-
 
 const resumoProjetosDao = new ResumoProjetosDao();
 
@@ -14,7 +12,7 @@ export class ResumoProjetosController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             
@@ -38,7 +36,7 @@ export class ResumoProjetosController {
         
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
@@ -58,7 +56,7 @@ export class ResumoProjetosController {
 
         try {
 
-            const token = splitToken(req.headers.authorization)
+            const token = <string>req.headers.authorization
 
             await verificarTokenBl({token});
             
@@ -80,7 +78,7 @@ export class ResumoProjetosController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
 
@@ -104,7 +102,7 @@ export class ResumoProjetosController {
 
         try {
 
-            const token = splitToken(req.headers.authorization);
+            const token = <string>req.headers.authorization;
 
             await verificarTokenBl({token});
             
