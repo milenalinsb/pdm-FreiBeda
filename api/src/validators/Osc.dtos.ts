@@ -1,4 +1,4 @@
-import { IsISO8601, IsNotEmpty, IsString } from 'class-validator'
+import { IsISO8601, IsNotEmpty, IsString,IsOptional } from 'class-validator'
 
 export class CadastrarOSCDTO {
     @IsString()
@@ -22,5 +22,30 @@ export class CadastrarOSCDTO {
 
     @IsString()
     @IsNotEmpty({ message: 'Esse campo e obrigatório' })
+    visao!: string
+}
+
+export class AtualizarOSCDTO {
+    @IsString()
+    @IsOptional()
+    nome!: string
+
+    @IsString()
+    @IsOptional()
+    sigla!: string
+
+    @IsISO8601({ message: 'A data deve esta no formato ISO8601' })
+    @IsOptional()
+    data_Fundacao!: string
+
+    @IsOptional()
+    publico_Alvo!: string
+
+    @IsString()
+    @IsOptional()
+    missao!: string
+
+    @IsString()
+    @IsOptional()
     visao!: string
 }
