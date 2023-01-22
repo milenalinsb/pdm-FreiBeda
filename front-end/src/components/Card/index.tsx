@@ -1,6 +1,6 @@
 import { styles } from './style';
 import { Box, Text, Icon } from 'native-base';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome,AntDesign } from '@expo/vector-icons';
 
 type Props = {
     icon?: any,

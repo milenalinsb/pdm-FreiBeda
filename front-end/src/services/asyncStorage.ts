@@ -42,3 +42,16 @@ export const setToken = async (value: string, expire: number) => {
     });
   }
 };
+
+export const deletToken = async () => {
+  try {
+    await AsyncStorage.clear();
+  } catch (e) {
+    Dialog.show({
+      type: ALERT_TYPE.DANGER,
+      title: "Ops",
+      textBody: "Ocorreu um erro inesperado",
+      button: "Ok",
+    });
+  }
+}
