@@ -1,5 +1,6 @@
 import { hash } from 'bcrypt'
 import { Request, Response } from 'express'
+import { UploadedFile } from 'express-fileupload'
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service'
 import { IId } from '../types/types.id'
 import {
@@ -32,6 +33,19 @@ export class UsuariosController {
                 message: error.message,
             })
         }
+    }
+
+    async uploadAvatarUsuario(req: Request, res: Response) {
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send('No files were uploaded.');
+          }
+        const avatar =<UploadedFile> req.files.avatar;
+        const { id } = <IId>(<unknown>req.params);
+        avatar.name = id;
+        await usuariosDao.uploadUsuario(avatar,id)
+        return res.status(200).json({
+            message: 'Avatar atualizado',
+        })
     }
 
     async logout(req: Request, res: Response) {
@@ -158,6 +172,6 @@ export class UsuariosController {
             return res.status(400).json({
                 message: error.message,
             })
-        }
+        } 
     }
 }

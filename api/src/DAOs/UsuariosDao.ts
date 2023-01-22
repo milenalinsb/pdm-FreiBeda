@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { compare, hash } from 'bcrypt'
+import { UploadedFile } from 'express-fileupload'
 import { sign } from 'jsonwebtoken'
+import { uploadFile } from '../services/uploadFile.service'
 import { IId } from '../types/types.id'
 import {
     IAtualizarUsuario,
@@ -124,5 +126,19 @@ export class UsuariosDao {
             },
         })
         return novoUsuario
+    }
+
+    async uploadUsuario(avatar: UploadedFile,id:string) {
+        uploadFile(avatar)
+        const dataAtualizacao = Date.now()
+        await prisma.usuarios.update({
+            where: {
+                id,
+            },
+            data: {
+                modified_At: new Date(dataAtualizacao),
+                avatar:`${avatar.name}.png`
+            },
+        })
     }
 }
