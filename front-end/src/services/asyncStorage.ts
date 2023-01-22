@@ -26,6 +26,34 @@ export const getToken = async (kay: string) => {
   }
 };
 
+export const setUser = async (value: string) => {
+  try {
+    await AsyncStorage.setItem("@user", value);
+  } catch (e) {
+    Dialog.show({
+      type: ALERT_TYPE.DANGER,
+      title: "Ops",
+      textBody: "Ocorreu um erro inesperado",
+      button: "Ok",
+    });
+  }
+}
+
+export const getUser = async (kay: string) => {
+  try {
+    const value = await AsyncStorage.getItem(kay);
+    return value;
+  } catch (e) {
+    Dialog.show({
+      type: ALERT_TYPE.DANGER,
+      title: "Ops",
+      textBody: "Ocorreu um erro inesperado",
+      button: "Ok",
+    });
+  }
+}
+
+
 export const setToken = async (value: string, expire: number) => {
   try {
     await AsyncStorage.setItem("@token", value);

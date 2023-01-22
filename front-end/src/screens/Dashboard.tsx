@@ -28,7 +28,7 @@ export const Dashboard = ({ navigation }: NavigationProps) => {
           </TouchableOpacity>
         </HStack>
       </ScrollView>
-      <Footer navigation={navigation} page={"Notifications"} />
+      <Footer navigation={navigation} page={"Dashboard"} />
     </>
   );
 };

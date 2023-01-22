@@ -12,7 +12,7 @@ import {
 import { ALERT_TYPE, Dialog } from "react-native-alert-notification";
 import { LoginDto } from "../../dtos/login.dto";
 import { api } from "../../services/api";
-import { setToken } from "../../services/asyncStorage";
+import { setToken,setUser } from "../../services/asyncStorage";
 import { AxiosError } from "../../types/axiosError";
 import { ILogin } from "../../types/login";
 import { NavigationProps } from "../../types/navigation";
@@ -31,7 +31,13 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
               email: values.email,
               senha: values.password,
             } as ILogin);
-            setToken(data.data.token,24);
+            setToken(data.data.token, 24);
+            const user = await api.get(`/usuarios/buscar/${data.data.id}`, {
+              headers: {
+                authorization: data.data.token,
+              },
+            });
+            await setUser(JSON.stringify(user.data.usuario))
             navigation.navigate("Dashboard");
             resetForm();
           } catch (error) {
