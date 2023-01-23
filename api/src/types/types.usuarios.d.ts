@@ -22,6 +22,7 @@ interface IDadosAtualizados {
     username?: string
     email?: string
     senha?: string
+    avatar?: string
 }
 
 export interface IEmailNomeUsuario {

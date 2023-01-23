@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { makeValidateBody } from 'express-class-validator';
 import { verificarToken } from '../middlewares/verificarTokenJWT';
-import { CadastrarUsuarioDTO, 
-        LoginUsuarioDto,
-        AtualizarUsuarioDto } from "../validators/Usuarios.dtos";
+import {
+    AtualizarUsuarioDto, CadastrarUsuarioDTO,
+    LoginUsuarioDto
+} from "../validators/Usuarios.dtos";
 import { UsuariosController } from './../controllers/UsuariosController';
 
 const routesUsuarios = Router();
@@ -32,5 +33,8 @@ routesUsuarios.delete('/usuarios/deletar',
                         makeValidateBody(AtualizarUsuarioDto),
                         verificarToken,
                         usuariosController.atualizarUsuario);
+routesUsuarios.put('/usuario/upload/:id',
+                     verificarToken,
+                     usuariosController.uploadAvatarUsuario)
 
 export { routesUsuarios };
