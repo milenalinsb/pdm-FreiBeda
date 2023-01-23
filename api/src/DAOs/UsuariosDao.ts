@@ -53,6 +53,7 @@ export class UsuariosDao {
                 modified_At: true,
                 id: true,
                 username: true,
+                avatar:true
             },
         })
 

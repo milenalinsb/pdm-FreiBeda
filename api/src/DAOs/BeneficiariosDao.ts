@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
+import { UploadedFile } from 'express-fileupload';
 import moment from 'moment';
+import { uploadFile } from '../services/uploadFile.service';
 import { IAtualizarBeneficiario, IBeneficiario, IBeneficiarioExiste } from '../types/types.beneficiario';
 import { IId } from '../types/types.id';
 
@@ -91,6 +93,20 @@ async deletarBeneficiario({id}:IId) {
 
      return beneficiario;
  };
+
+ async uploadBeneficiario(avatar: UploadedFile,id:string) {
+    uploadFile(avatar)
+    const dataAtualizacao = Date.now()
+    await prisma.beneficiarios.update({
+        where: {
+            id,
+        },
+        data: {
+            modified_At: new Date(dataAtualizacao),
+            avatar:`${avatar.name}.png`
+        },
+    })
+}
 
  async atualizarBeneficiario({
     id,

@@ -37,4 +37,4 @@ dist/**/*
 # ignore yarn.lock
 yarn.lock
 
-src/public/**
+src/public/*.png

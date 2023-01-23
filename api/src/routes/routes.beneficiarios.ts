@@ -24,5 +24,8 @@ routeBeneficiarios.put('/beneficiarios/atualizarBeneficiarios/:id',
 routeBeneficiarios.delete('/beneficiarios/deletarBeneficiarios/:id',
                         verificarToken,
                         beneficiariosController.deletarBeneficiario);
+routeBeneficiarios.put('/beneficiarios/upload/:id',
+                        verificarToken,
+                        beneficiariosController.uploadAvatarBeneficiario);
 
 export { routeBeneficiarios };

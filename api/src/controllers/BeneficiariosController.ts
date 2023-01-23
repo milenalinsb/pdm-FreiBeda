@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { UploadedFile } from 'express-fileupload';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
 import { IAtualizarBeneficiario, IBeneficiario } from '../types/types.beneficiario';
 import { IId } from '../types/types.id';
@@ -123,4 +124,17 @@ export class BeneficiariosController {
             });
         };
     };
+
+    async uploadAvatarBeneficiario(req: Request, res: Response) {
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send('No files were uploaded.');
+          }
+        const avatar =<UploadedFile> req.files.avatar;
+        const { id } = <IId>(<unknown>req.params);
+        avatar.name = id;
+        await beneficiariosDao.uploadBeneficiario(avatar,id)
+        return res.status(200).json({
+            message: 'Avatar atualizado',
+        })
+    }
 };
