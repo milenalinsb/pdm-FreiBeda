@@ -1,148 +1,147 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
 }
 
 model Usuarios {
-  id          String      @id @default(uuid())
-  username    String
-  email       String   @unique
-  senha       String
-  avatar      String?
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
+    id          String   @id @default(uuid())
+    username    String
+    email       String   @unique
+    senha       String
+    avatar      String?
+    created_At  DateTime @default(now())
+    modified_At DateTime @default(now())
 
-  @@map("usuarios")
+    @@map("usuarios")
 }
 
 model OSC {
-  id          String      @id @default(uuid())
-  nome          String
-  sigla         String
-  data_Fundacao DateTime
-  publico_Alvo  String
-  missao        String
-  visao         String
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
-  endereco      Enderecos?
-  governanca    Governanca[]
-  projetos      Projetos[]
+    id            String       @id @default(uuid())
+    nome          String
+    sigla         String
+    data_Fundacao DateTime
+    publico_Alvo  String
+    missao        String
+    visao         String
+    created_At    DateTime     @default(now())
+    modified_At   DateTime     @default(now())
+    endereco      Enderecos?
+    governanca    Governanca[]
+    projetos      Projetos[]
 
-  @@map("osc")
+    @@map("osc")
 }
 
 model Enderecos {
-  id          String      @id @default(uuid())
-  logradouro         String
-  numero             String
-  cep                String
-  bairro             String
-  cidade             String
-  estado             String
-  referencia         String
-  id_fk_osc          String?           @unique
-  id_fk_beneficiario String?          @unique
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
-  beneficiarios      Beneficiarios? @relation(fields: [id_fk_beneficiario], references: [id])
-  osc                OSC?           @relation(fields: [id_fk_osc], references: [id])
+    id                 String         @id @default(uuid())
+    logradouro         String
+    numero             String
+    cep                String
+    bairro             String
+    cidade             String
+    estado             String
+    referencia         String
+    id_fk_osc          String?        @unique
+    id_fk_beneficiario String?        @unique
+    created_At         DateTime       @default(now())
+    modified_At        DateTime       @default(now())
+    beneficiarios      Beneficiarios? @relation(fields: [id_fk_beneficiario], references: [id])
+    osc                OSC?           @relation(fields: [id_fk_osc], references: [id])
 
-  @@map("enderecos")
+    @@map("enderecos")
 }
 
 model Governanca {
-  id          String      @id @default(uuid())
-  nome        String
-  cargo       String
-  id_fk_osc   String?
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
-  osc         OSC?      @relation(fields: [id_fk_osc], references: [id])
+    id          String   @id @default(uuid())
+    nome        String
+    cargo       String
+    id_fk_osc   String?
+    created_At  DateTime @default(now())
+    modified_At DateTime @default(now())
+    osc         OSC?     @relation(fields: [id_fk_osc], references: [id])
 
-  @@map("governanca")
+    @@map("governanca")
 }
 
 model Projetos {
-  id          String      @id @default(uuid())
-  id_fk_osc            String?
-  id_fk_resumo_Projeto String?
-  beneficiarios        Beneficiarios[]
-  planejamento         Planejamentos[]
-  osc                  OSC?              @relation(fields: [id_fk_osc], references: [id])
-  resumo_Projeto       Resumo_Projetos?
+    id                   String           @id @default(uuid())
+    id_fk_osc            String?
+    id_fk_resumo_Projeto String?
+    beneficiarios        Beneficiarios[]
+    planejamento         Planejamentos[]
+    osc                  OSC?             @relation(fields: [id_fk_osc], references: [id])
+    resumo_Projeto       Resumo_Projetos?
 
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
+    created_At  DateTime @default(now())
+    modified_At DateTime @default(now())
 
-  @@map("projetos")
+    @@map("projetos")
 }
 
 model Resumo_Projetos {
-  id          String      @id @default(uuid())
-  nome           String
-  impacto        String
-  objetivo       String
-  atividades     String
-  responsavel    String
-  valor          String
-  patrocinadores String
-  id_fk_projeto  String?      @unique
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
-  ended_At       DateTime @default(now())
+    id             String   @id @default(uuid())
+    nome           String
+    impacto        String
+    objetivo       String
+    atividades     String
+    responsavel    String
+    valor          String
+    patrocinadores String
+    id_fk_projeto  String?  @unique
+    created_At     DateTime @default(now())
+    modified_At    DateTime @default(now())
+    ended_At       DateTime @default(now())
 
-  projeto        Projetos? @relation(fields: [id_fk_projeto], references: [id])
+    projeto Projetos? @relation(fields: [id_fk_projeto], references: [id])
 
-  @@map("resumo_projetos")
+    @@map("resumo_projetos")
 }
 
 model Beneficiarios {
-  id          String      @id @default(uuid())
-  nome              String
-  data_Nascimento   DateTime
-  sexo              String
-  cor_Declarada     String
-  is_Menor          Boolean
-  responsavel_Menor String
-  profissao         String
-  renda_Mensal      String
-  id_fk_projeto     String
-  avatar      String?
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
-  ended_At       DateTime @default(now())
-  projeto           Projetos   @relation(fields: [id_fk_projeto], references: [id])
-  endereco          Enderecos?
+    id                String     @id @default(uuid())
+    nome              String
+    data_Nascimento   DateTime
+    sexo              String
+    cor_Declarada     String
+    is_Menor          Boolean
+    responsavel_Menor String
+    profissao         String
+    renda_Mensal      String
+    id_fk_projeto     String
+    avatar            String?
+    created_At        DateTime   @default(now())
+    modified_At       DateTime   @default(now())
+    ended_At          DateTime   @default(now())
+    projeto           Projetos   @relation(fields: [id_fk_projeto], references: [id])
+    endereco          Enderecos?
 
-  @@map("beneficiarios")
+    @@map("beneficiarios")
 }
 
 model Planejamentos {
-  id          String      @id @default(uuid())
-  atividade     String
-  recursos      String
-  custo         String
-  responsavel   String
-  status        Boolean
-  id_fk_projeto String
-  created_At  DateTime @default(now())
-  modified_At DateTime @default(now())
-  ended_At       DateTime @default(now())
-  projeto       Projetos @relation(fields: [id_fk_projeto], references: [id])
+    id            String   @id @default(uuid())
+    atividade     String
+    recursos      String
+    custo         String
+    responsavel   String
+    status        Boolean
+    id_fk_projeto String
+    created_At    DateTime @default(now())
+    modified_At   DateTime @default(now())
+    ended_At      DateTime @default(now())
+    projeto       Projetos @relation(fields: [id_fk_projeto], references: [id])
 
-  @@map("planejamentos")
+    @@map("planejamentos")
 }
 
 model TokenBlacklist {
+    id         Int      @id @default(autoincrement())
+    token      String
+    created_At DateTime @default(now())
 
-  id Int @id @default(autoincrement())
-  token String
-  created_At  DateTime @default(now())
-
-  @@map("tokenbl")
+    @@map("tokenbl")
 }

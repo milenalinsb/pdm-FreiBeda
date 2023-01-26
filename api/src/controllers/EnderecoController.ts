@@ -23,7 +23,7 @@ export class EnderecoController {
             const enderecoCadastrado = await enderecoDao.cadastrarEndereco({logradouro, numero, cep, bairro, cidade, estado, referencia});
 
             return res.status(201)
-                        .json({message: `Endereço cadastrado.`});
+                        .json({id:enderecoCadastrado.id});
 
         } catch (error:any) {
             return res.status(400).json({

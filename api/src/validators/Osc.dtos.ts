@@ -23,6 +23,9 @@ export class CadastrarOSCDTO {
     @IsString()
     @IsNotEmpty({ message: 'Esse campo e obrigatório' })
     visao!: string
+
+    @IsNotEmpty()
+    endereco!:EndercoID
 }
 
 export class AtualizarOSCDTO {
@@ -48,4 +51,9 @@ export class AtualizarOSCDTO {
     @IsString()
     @IsOptional()
     visao!: string
+}
+
+class EndercoID{
+    @IsString()
+    id!: string
 }

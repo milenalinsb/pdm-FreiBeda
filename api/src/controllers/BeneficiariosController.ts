@@ -5,7 +5,6 @@ import { IAtualizarBeneficiario, IBeneficiario } from '../types/types.beneficiar
 import { IId } from '../types/types.id';
 import { BeneficiariosDao } from './../DAOs/BeneficiariosDao';
 
-
 const beneficiariosDao = new BeneficiariosDao();
 
 export class BeneficiariosController {
