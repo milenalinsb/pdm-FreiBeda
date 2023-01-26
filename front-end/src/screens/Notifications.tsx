@@ -8,10 +8,6 @@ export const Notifications = ({ navigation }: NavigationProps) => {
   return (
     <>
       <ScrollView>
-        <Header
-          nome={"Cooperativa Terra e Vida - CTV"}
-          local={"Recife, Pernambuco"}
-        />
         <Notification textoNotificacao={"Teste"} />
       </ScrollView>
       <Footer navigation={navigation} page={"Notifications"} />
