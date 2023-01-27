@@ -3,17 +3,14 @@ import { Footer } from "../components/Footer";
 import { OcsList } from "../components/OcsList";
 import { NavigationProps } from "../types/navigation";
 
-//<Header
-//nome="Cooperativa Terra e Vida - CTV"
-//local="Recife, Pernambuco"
-///>
-
 export const Dashboard = ({ navigation }: NavigationProps) => {
   return (
     <>
       <ScrollView>
         <Box marginTop={15}>
-          <OcsList/>
+          <OcsList navigation={navigation} navigate={function (arg0: string, params: any): unknown {
+            throw new Error("Function not implemented.");
+          } }/>
         </Box>
       </ScrollView>
       <Footer navigation={navigation} page={"Dashboard"} />

@@ -1,17 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Splash } from "../screens/Splash";
 import { Login } from "../screens/Login";
-import { Dashboard } from "../screens/Dashboard";
-import { Notifications } from "../screens/Notifications";
+import { Splash } from "../screens/Splash";
 
 const Stack = createNativeStackNavigator();
 
 export const StackNavigator = () => {
-    return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Splash" component={Splash} />
-            <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Splash" component={Splash} />
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  );
 };

@@ -19,6 +19,7 @@ export const Footer = ({ navigation, page }: Props) => {
   const keyboardHideListener = Keyboard.addListener("keyboardDidHide", () => {
     setSizeHeader(true);
   });
+
   return (
     <>
       <Box style={styles.container}>

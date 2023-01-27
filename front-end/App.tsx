@@ -1,7 +1,7 @@
 import { Box, NativeBaseProvider } from "native-base";
+import { LogBox } from "react-native";
 import { AlertNotificationRoot } from "react-native-alert-notification";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { LogBox } from "react-native";
 import { Routes } from "./Routes";
 import { theme } from "./src/theme";
 

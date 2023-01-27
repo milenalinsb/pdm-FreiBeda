@@ -8,7 +8,6 @@ export const Notifications = ({ navigation }: NavigationProps) => {
   return (
     <>
       <ScrollView>
-        <Notification textoNotificacao={"Teste"} />
       </ScrollView>
       <Footer navigation={navigation} page={"Notifications"} />
     </>
