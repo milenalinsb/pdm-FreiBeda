@@ -7,7 +7,6 @@ import { TabNavigator } from "./src/navigato/TabNavigator";
 
 const Stack = createNativeStackNavigator()
 
-
 export const Routes = () => {
     return (
         <Fragment>

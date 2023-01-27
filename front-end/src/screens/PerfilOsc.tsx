@@ -24,7 +24,7 @@ export const PerfilOsc = ({ navigation, route }: Props) => {
                 margin={3}
               
                 size={"md"}
-                onPress={() => navigation.navigate("Osc", route.params)}
+                onPress={() => navigation.navigate("Map", route.params)}
               >
                 Endereço da Organização
               </Button>
