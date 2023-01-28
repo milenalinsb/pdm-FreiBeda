@@ -3,6 +3,7 @@ import { OscDao } from '../DAOs/OscDao'
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service'
 import { IId } from '../types/types.id'
 import { IAtualizarOSCData, ICadastrarOsc } from '../types/types.osc'
+import NodeGeocoder from "node-geocoder";
 
 const oscDao = new OscDao()
 

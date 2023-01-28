@@ -12,9 +12,6 @@ import { OcsItem } from "../OcsItem";
 export const OcsList = ({ navigation }: NavigationProps) => {
   const [list, setLIst] = useState<IOsc[]>([]);
 
-  const { setValor, valor } = useContext<IContext>(HomeContext);
-  const { setValors } = useContext<IContextValues>(ValuesContex);
-
   useEffect(() => {
     (async () => {
       const token = await getToken("@token");
