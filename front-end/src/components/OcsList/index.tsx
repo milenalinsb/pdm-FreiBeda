@@ -1,8 +1,7 @@
 import { FlatList, Heading } from "native-base";
 import { useContext, useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
-import { HomeContext, IContext } from "../../contexts/homeContext";
-import { IContextValues, ValuesContex } from "../../contexts/valuesContext";
+import { IRoutesContexts, RoutesContexts } from "../../contexts/RoutesContexts";
 import { api } from "../../services/api";
 import { getToken } from "../../services/asyncStorage";
 import { NavigationProps } from "../../types/navigation";
@@ -24,6 +23,11 @@ export const OcsList = ({ navigation }: NavigationProps) => {
     })();
   });
 
+
+  const handlingOsc = (navigation:any,list:any) => {
+    navigation.navigate("Osc", list);
+  }
+
   return (
     <>
       <Heading fontSize="xl" p="4" pb="3">
@@ -34,7 +38,7 @@ export const OcsList = ({ navigation }: NavigationProps) => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Osc", list[index]);
+              handlingOsc(navigation,list[index])
             }}
             activeOpacity={0.8}
           >

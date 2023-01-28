@@ -1,4 +1,5 @@
-import { HStack } from "native-base";
+import { HStack,Text } from "native-base";
+import { useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import { Card } from "../components/Card";
 import { Footer } from "../components/Footer";
@@ -28,7 +29,14 @@ export const Osc = ({ navigation, route }: Props) => {
           >
             <Card texto="Perfil da OSC" icon={"group"} />
           </TouchableOpacity>
-          <Card texto="Projetos" icon={"book"} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("PerfilOsc", route.params);
+            }}
+            activeOpacity={0.8}
+          >
+            <Card texto="Projetos" icon={"book"} />
+          </TouchableOpacity>
         </HStack>
         <HStack space={3} justifyContent="center">
           <Card texto="Governanca" icon={"user"} />

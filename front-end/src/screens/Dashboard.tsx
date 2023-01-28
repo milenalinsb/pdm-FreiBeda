@@ -8,9 +8,12 @@ export const Dashboard = ({ navigation }: NavigationProps) => {
     <>
       <ScrollView>
         <Box marginTop={15}>
-          <OcsList navigation={navigation} navigate={function (arg0: string, params: any): unknown {
-            throw new Error("Function not implemented.");
-          } }/>
+          <OcsList
+            navigation={navigation}
+            navigate={function (arg0: string, params: any): unknown {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </Box>
       </ScrollView>
       <Footer navigation={navigation} page={"Dashboard"} />

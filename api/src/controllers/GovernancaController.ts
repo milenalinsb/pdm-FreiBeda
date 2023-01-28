@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service';
-import { IAtualizarGovernanca, IAtualizarGovernancaData, IGovernanca } from '../types/types.governanca';
-import { IId } from '../types/types.id';
+import {  IAtualizarGovernancaData, IGovernanca } from '../types/types.governanca';
+import { IId, IIdOsc } from '../types/types.id';
 import { GovernancaDao } from './../DAOs/GovernancaDao';
+import { RegistrarGovernancaDTO } from "../validators/Governancas.dtos";
+import { PrismaClient } from '@prisma/client';
 
 const governancaDao = new GovernancaDao();
+
+const prisma = new PrismaClient();
 
 export class GovernancaController {
 
@@ -16,11 +20,11 @@ export class GovernancaController {
 
             await verificarTokenBl({token});
             
-            const { nome, cargo } = <IGovernanca>req.body;
+            const { nome, cargo,idOsc } = <RegistrarGovernancaDTO>req.body;
 
-            await governancaDao.governancaExiste({ nome, cargo });
+            await governancaDao.governancaExiste({ nome, cargo,idOsc });
 
-            const governancaCadastradad = await governancaDao.cadastrarGovernanca({ nome, cargo });
+            const governancaCadastradad = await governancaDao.cadastrarGovernanca({ nome, cargo,idOsc });
 
             return res.status(201)
                         .json({message: `Governança cadastrada.`});
@@ -63,6 +67,32 @@ export class GovernancaController {
             const {id} = <IId><unknown>req.params;
 
             const governanca = await governancaDao.buscarGovernancaPorId({id});
+
+            return res.status(200)
+                        .json( {governanca} );
+
+        } catch (error:any) {
+            return res.status(400).json({
+                message: error.message
+            });
+        };
+    };
+
+
+    async buscarGovernancaByIdOsc(req:Request, res:Response) {
+
+        try {
+            const token =  <string>req.headers.authorization
+
+            await verificarTokenBl({token});
+            
+            const {idOsc} = <IIdOsc><unknown>req.params;
+
+            const governanca = await prisma.governanca.findMany({
+                where:{
+                    id_fk_osc:idOsc
+                }
+            })
 
             return res.status(200)
                         .json( {governanca} );

@@ -40,7 +40,7 @@ export const Map = ({ navigation, route }: Props) => {
         longitudeDelta: 0.0421,
       });
     })();
-  }, []);
+  }, [route]);
 
   return (
     <Box bg={"white"}>

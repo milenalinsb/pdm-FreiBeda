@@ -8,6 +8,10 @@ export class RegistrarGovernancaDTO {
     @IsString()
     @IsNotEmpty({ message: 'Esse campo e obrigatório' })
     cargo!: string
+
+    @IsString()
+    @IsNotEmpty({ message: 'Esse campo e obrigatório' })
+    idOsc!: string
 }
 
 export class AtualizarGovernancaDTO {
