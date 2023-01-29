@@ -6,6 +6,8 @@ import { Perfil } from "../screens/Perfil";
 import { PerfilOsc } from "../screens/PerfilOsc";
 import { Governancas } from "../screens/Governancas";
 import { Map } from "../screens/Map";
+import { GovernancaForme } from "../screens/GovernancaForme";
+import { GovernancaFormeEdit } from "../screens/GovernancaFormeEdit";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +26,8 @@ export const TabNavigator = () => {
         <Tab.Screen name="PerfilOsc" component={PerfilOsc} />
         <Tab.Screen name="Map" component={Map} />
         <Tab.Screen name="Governancas" component={Governancas} />
+        <Tab.Screen name="GovernancaForme" component={GovernancaForme} />
+        <Tab.Screen name="GovernancaFormeEdit" component={GovernancaFormeEdit} />
       </Tab.Navigator>
   );
 };

@@ -1,4 +1,5 @@
 import { Box, ScrollView } from "native-base";
+import { AddBtn } from "../components/AddBtn";
 import { Footer } from "../components/Footer";
 import { OcsList } from "../components/OcsList";
 import { NavigationProps } from "../types/navigation";
@@ -16,6 +17,7 @@ export const Dashboard = ({ navigation }: NavigationProps) => {
           />
         </Box>
       </ScrollView>
+      <AddBtn />
       <Footer navigation={navigation} page={"Dashboard"} />
     </>
   );

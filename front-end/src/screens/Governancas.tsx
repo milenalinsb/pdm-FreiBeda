@@ -1,9 +1,8 @@
-import { Entypo, FontAwesome, Octicons } from "@expo/vector-icons";
+import { FontAwesome, Octicons } from "@expo/vector-icons";
 import {
   Avatar,
   Box,
   FlatList,
-  Flex,
   HStack,
   ScrollView,
   Spacer,
@@ -13,11 +12,11 @@ import {
 import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { ALERT_TYPE, Dialog } from "react-native-alert-notification";
+import { AddBtn } from "../components/AddBtn";
 import { Back } from "../components/Back";
 import { Footer } from "../components/Footer";
 import { api } from "../services/api";
 import { getToken } from "../services/asyncStorage";
-import { randomHex } from "../services/randomHex";
 import { IGovernanca } from "../types/governanca";
 import { NavigationProps } from "../types/navigation";
 
@@ -68,7 +67,7 @@ export const Governancas = ({ navigation, route }: Props) => {
         onPress={() => navigation.navigate("Osc", route.params)}
         activeOpacity={0.8}
       >
-        <Back text="Governança" />
+        <Back text="Governancas" />
       </TouchableOpacity>
       <ScrollView bg={"#ffffff"}>
         <FlatList
@@ -84,9 +83,7 @@ export const Governancas = ({ navigation, route }: Props) => {
             >
               <Box padding={6}>
                 <HStack space={[2, 3]} justifyContent="space-between">
-                  <Avatar bg={randomHex()} size="60">
-                    {`${item.nome[0]}${item.nome[1]}`}
-                  </Avatar>
+                  <Avatar size="60">{`${item.nome[0]}${item.nome[1]}`}</Avatar>
                   <VStack>
                     <Text color="primary.900" bold>
                       {item.nome}
@@ -105,7 +102,10 @@ export const Governancas = ({ navigation, route }: Props) => {
                     <HStack space={[5, 5]} justifyContent="space-between">
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("Governancas", route.params);
+                          navigation.navigate("GovernancaFormeEdit", {
+                            idGovernanca: item.id,
+                            ...route.params,
+                          });
                         }}
                         activeOpacity={0.8}
                       >
@@ -141,20 +141,14 @@ export const Governancas = ({ navigation, route }: Props) => {
           keyExtractor={(item) => item.id}
         />
       </ScrollView>
-      <Box bg={"#ffffff"} padding={6}>
-        <Flex direction="row-reverse" mb="2.5" mt="1.5">
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Governancas", route.params);
-            }}
-            activeOpacity={0.8}
-          >
-            <Avatar bg={"primary.900"} size="60">
-              <Entypo name={"plus"} size={40} color={"#FFF"} />
-            </Avatar>
-          </TouchableOpacity>
-        </Flex>
-      </Box>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("GovernancaForme", route.params);
+        }}
+        activeOpacity={0.8}
+      >
+        <AddBtn />
+      </TouchableOpacity>
       <Footer navigation={navigation} page={"Dashboard"} />
     </>
   );

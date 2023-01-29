@@ -47,7 +47,6 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
                 email: "Usuário não cadastrado.",
               });
             } else if (data.response.data.message === "Senha está incorreta.") {
-              console.log(data.response.data.message);
               setErrors({
                 password: data.response.data.message,
               });
