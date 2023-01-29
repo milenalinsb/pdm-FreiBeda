@@ -4,6 +4,7 @@ import { Notifications } from "../screens/Notifications";
 import { Osc } from "../screens/Osc";
 import { Perfil } from "../screens/Perfil";
 import { PerfilOsc } from "../screens/PerfilOsc";
+import { Governancas } from "../screens/Governancas";
 import { Map } from "../screens/Map";
 
 const Tab = createBottomTabNavigator();
@@ -22,6 +23,7 @@ export const TabNavigator = () => {
         <Tab.Screen name="Osc" component={Osc} />
         <Tab.Screen name="PerfilOsc" component={PerfilOsc} />
         <Tab.Screen name="Map" component={Map} />
+        <Tab.Screen name="Governancas" component={Governancas} />
       </Tab.Navigator>
   );
 };

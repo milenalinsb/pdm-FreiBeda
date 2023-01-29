@@ -1,5 +1,5 @@
-import { Box, Button, Divider, Heading, VStack } from "native-base";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { Box, Button, Divider, Heading, ScrollView, VStack } from "native-base";
+import { TouchableOpacity } from "react-native";
 import { Back } from "../components/Back";
 import { Footer } from "../components/Footer";
 import { NavigationProps } from "../types/navigation";
@@ -18,7 +18,7 @@ export const PerfilOsc = ({ navigation, route }: Props) => {
       >
         <Back text="Voltar" />
       </TouchableOpacity>
-      <ScrollView>
+      <ScrollView bg={"#ffffff"}>
         <Box borderX="1" borderRadius="md">
           <VStack space="4" divider={<Divider />}>
             <Box px="4" pt="4">

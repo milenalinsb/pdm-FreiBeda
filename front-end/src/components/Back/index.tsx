@@ -8,7 +8,7 @@ type Props={
 export const Back = ({text}:Props) => {
   return (
     <>
-      <Box style={{ padding: 10 }}>
+      <Box bg={"#ffffff"} style={{ padding: 10 }}>
         <HStack space={3} justifyContent="flex-start">
           <AntDesign
             style={{ marginTop: 5 }}

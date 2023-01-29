@@ -65,7 +65,7 @@ export const Map = ({ navigation, route }: Props) => {
 const styles = StyleSheet.create({
   map: {
     width: "100%",
-    height: "84%",
+    height: "85.7%",
   },
 });
 

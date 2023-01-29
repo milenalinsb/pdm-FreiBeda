@@ -45,7 +45,7 @@ export class OscDao {
                 visao,
                 endereco:{
                     connect:{
-                        id:endereco?.id
+                        id:endereco.id
                     }
                 }
             }

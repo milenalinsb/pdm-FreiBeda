@@ -1,6 +1,5 @@
-import { HStack,Text } from "native-base";
-import { useState } from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { HStack, ScrollView } from "native-base";
+import { TouchableOpacity } from "react-native";
 import { Card } from "../components/Card";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -19,15 +18,15 @@ export const Osc = ({ navigation, route }: Props) => {
         sigla={route.params.sigla}
         local={`${route.params.endereco.cidade}, ${route.params.endereco.estado}`}
       />
-      <ScrollView>
+      <ScrollView bg={"#ffffff"}>
         <HStack space={3} justifyContent="center">
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("PerfilOsc", route.params);
+              navigation.navigate("Governancas", route.params);
             }}
             activeOpacity={0.8}
           >
-            <Card texto="Perfil da OSC" icon={"group"} />
+            <Card texto="Governanca" icon={"user"} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -39,7 +38,14 @@ export const Osc = ({ navigation, route }: Props) => {
           </TouchableOpacity>
         </HStack>
         <HStack space={3} justifyContent="center">
-          <Card texto="Governanca" icon={"user"} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Map", route.params);
+            }}
+            activeOpacity={0.8}
+          >
+            <Card texto="Localização" icon={"map-marker"} />
+          </TouchableOpacity>
           <Card texto="Beneficiarios" icon={"male"} />
         </HStack>
       </ScrollView>

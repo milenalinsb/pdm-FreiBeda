@@ -6,7 +6,7 @@ import { NavigationProps } from "../types/navigation";
 export const Dashboard = ({ navigation }: NavigationProps) => {
   return (
     <>
-      <ScrollView>
+      <ScrollView bg={"#ffffff"}>
         <Box marginTop={15}>
           <OcsList
             navigation={navigation}

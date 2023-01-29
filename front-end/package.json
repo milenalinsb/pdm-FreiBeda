@@ -16,6 +16,7 @@
     "axios": "^1.2.2",
     "class-validator-formik": "^1.0.1",
     "expo": "~47.0.12",
+    "expo-linear-gradient": "^12.0.1",
     "expo-status-bar": "~1.4.2",
     "formik": "^2.2.9",
     "moment": "^2.29.4",
