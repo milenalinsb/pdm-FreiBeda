@@ -40,7 +40,10 @@ export const Osc = ({ navigation, route }: Props) => {
         <HStack space={3} justifyContent="center">
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Map", route.params);
+              navigation.navigate("Map", {
+                ...route.params,
+                paramPropKey: "paramPropValue",
+              });
             }}
             activeOpacity={0.8}
           >

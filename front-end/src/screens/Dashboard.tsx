@@ -1,4 +1,5 @@
 import { Box, ScrollView } from "native-base";
+import { TouchableOpacity } from "react-native";
 import { AddBtn } from "../components/AddBtn";
 import { Footer } from "../components/Footer";
 import { OcsList } from "../components/OcsList";
@@ -17,7 +18,14 @@ export const Dashboard = ({ navigation }: NavigationProps) => {
           />
         </Box>
       </ScrollView>
-      <AddBtn />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("OscForme");
+        }}
+        activeOpacity={0.8}
+      >
+        <AddBtn />
+      </TouchableOpacity>
       <Footer navigation={navigation} page={"Dashboard"} />
     </>
   );
