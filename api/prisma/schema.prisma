@@ -31,7 +31,7 @@ model OSC {
     modified_At   DateTime     @default(now())
     endereco      Enderecos?
     governanca    Governanca[]
-    projetos      Projetos[]
+    Projetos      Projetos[]
 
     @@map("osc")
 }
@@ -68,37 +68,22 @@ model Governanca {
 }
 
 model Projetos {
-    id                   String           @id @default(uuid())
-    id_fk_osc            String?
-    id_fk_resumo_Projeto String?
-    beneficiarios        Beneficiarios[]
-    planejamento         Planejamentos[]
-    osc                  OSC?             @relation(fields: [id_fk_osc], references: [id])
-    resumo_Projeto       Resumo_Projetos?
-
-    created_At  DateTime @default(now())
-    modified_At DateTime @default(now())
-
-    @@map("projetos")
-}
-
-model Resumo_Projetos {
-    id             String   @id @default(uuid())
+    id             String          @id @default(uuid())
     nome           String
     impacto        String
     objetivo       String
     atividades     String
     responsavel    String
     valor          String
-    patrocinadores String
-    id_fk_projeto  String?  @unique
-    created_At     DateTime @default(now())
-    modified_At    DateTime @default(now())
-    ended_At       DateTime @default(now())
+    patrocinadores String?
+    osc            OSC             @relation(fields: [oSCId], references: [id])
+    beneficiarios  Beneficiarios[]
+    created_At     DateTime        @default(now())
+    modified_At    DateTime        @default(now())
+    ended_At       DateTime        @default(now())
+    oSCId          String
 
-    projeto Projetos? @relation(fields: [id_fk_projeto], references: [id])
-
-    @@map("resumo_projetos")
+    @@map("projetos")
 }
 
 model Beneficiarios {
@@ -116,8 +101,9 @@ model Beneficiarios {
     created_At        DateTime   @default(now())
     modified_At       DateTime   @default(now())
     ended_At          DateTime   @default(now())
-    projeto           Projetos   @relation(fields: [id_fk_projeto], references: [id])
     endereco          Enderecos?
+    Projetos          Projetos?  @relation(fields: [projetosId], references: [id])
+    projetosId        String?
 
     @@map("beneficiarios")
 }
@@ -133,7 +119,6 @@ model Planejamentos {
     created_At    DateTime @default(now())
     modified_At   DateTime @default(now())
     ended_At      DateTime @default(now())
-    projeto       Projetos @relation(fields: [id_fk_projeto], references: [id])
 
     @@map("planejamentos")
 }
