@@ -1,5 +1,7 @@
+import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
 import { UploadedFile } from 'express-fileupload'
+import moment from 'moment'
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service'
 import {
     IAtualizarBeneficiario,
@@ -9,6 +11,8 @@ import { IId } from '../types/types.id'
 import { BeneficiariosDao } from './../DAOs/BeneficiariosDao'
 
 const beneficiariosDao = new BeneficiariosDao()
+
+const prisma = new PrismaClient()
 
 export class BeneficiariosController {
     async registrarBeneficiarios(req: Request, res: Response) {
@@ -31,20 +35,47 @@ export class BeneficiariosController {
 
             await beneficiariosDao.beneficiarioExiste({ nome })
 
-            const beneficiarioCadastrado =
-                await beneficiariosDao.cadastrarBeneficiario({
+            const isMenor = Boolean(is_Menor)
+
+            const projeto = await prisma.projetos.findFirst({
+                where:{
+                    id:id_fk_projeto
+                },
+                include:{
+                    enderecos:true
+                }
+            })
+
+
+            const data = await prisma.beneficiarios.create({
+                data: {
                     nome,
-                    data_Nascimento,
+                    data_Nascimento: moment(
+                        data_Nascimento,
+                        'YYYY-MM-DD'
+                    ).toDate(),
                     sexo,
                     cor_Declarada,
-                    is_Menor,
+                    is_Menor: isMenor,
                     responsavel_Menor,
                     profissao,
                     renda_Mensal,
-                    id_fk_projeto,
-                })
+                    Projetos: {
+                        connect: {
+                            id: id_fk_projeto,
+                        },
+                    },
+                    endereco:{
+                        connect:{
+                            id: projeto?.enderecos.id
+                        }
+                    }
+                },
+            })
 
-            return res.status(201).json(beneficiarioCadastrado)
+            console.log(data)
+
+            return res.status(201).json({ message: 'Beneficiário criada' })
         } catch (error: any) {
             return res.status(400).json({
                 message: error.message,

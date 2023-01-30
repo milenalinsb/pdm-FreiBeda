@@ -51,6 +51,7 @@ model Enderecos {
     modified_At        DateTime       @default(now())
     beneficiarios      Beneficiarios? @relation(fields: [id_fk_beneficiario], references: [id])
     osc                OSC?           @relation(fields: [id_fk_osc], references: [id])
+    Projetos           Projetos[]
 
     @@map("enderecos")
 }
@@ -82,6 +83,8 @@ model Projetos {
     modified_At    DateTime        @default(now())
     ended_At       DateTime        @default(now())
     oSCId          String
+    enderecos      Enderecos       @relation(fields: [enderecosId], references: [id])
+    enderecosId    String
 
     @@map("projetos")
 }
@@ -96,7 +99,6 @@ model Beneficiarios {
     responsavel_Menor String
     profissao         String
     renda_Mensal      String
-    id_fk_projeto     String
     avatar            String?
     created_At        DateTime   @default(now())
     modified_At       DateTime   @default(now())
@@ -109,16 +111,17 @@ model Beneficiarios {
 }
 
 model Planejamentos {
-    id            String   @id @default(uuid())
+    id            String  @id @default(uuid())
     atividade     String
     recursos      String
     custo         String
     responsavel   String
     status        Boolean
     id_fk_projeto String
-    created_At    DateTime @default(now())
-    modified_At   DateTime @default(now())
-    ended_At      DateTime @default(now())
+
+    created_At  DateTime @default(now())
+    modified_At DateTime @default(now())
+    ended_At    DateTime @default(now())
 
     @@map("planejamentos")
 }

@@ -2,7 +2,10 @@ import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
 import { verificarTokenBl } from '../services/verificarTokenBlackList.service'
 import { IId } from '../types/types.id'
-import { ProjetosDTOS,AtualizarProjetosDTOS } from '../validators/Projetos.dtos'
+import {
+    AtualizarProjetosDTOS,
+    ProjetosDTOS,
+} from '../validators/Projetos.dtos'
 
 const prisma = new PrismaClient()
 
@@ -24,18 +27,27 @@ export class ProjetosController {
                 valor,
             } = <ProjetosDTOS>req.body
 
-            const data = await prisma.projetos.create({
-                data: {
-                    atividades,
-                    impacto,
-                    nome,
-                    objetivo,
-                    patrocinadores,
-                    valor,
-                    responsavel,
-                    oSCId: oscID,
-                },
+            const enderecos = await prisma.enderecos.findFirst({
+                where:{
+                    id_fk_osc:oscID
+                }
             })
+
+            if (enderecos != null) {
+                const data = await prisma.projetos.create({
+                    data: {
+                        atividades,
+                        impacto,
+                        nome,
+                        objetivo,
+                        patrocinadores,
+                        valor,
+                        responsavel,
+                        oSCId: oscID,
+                        enderecosId:enderecos.id
+                    },
+                })
+            }
             return res.status(201).json({ message: 'Projeto criado' })
         } catch (error: any) {
             return res.status(400).json({
@@ -118,9 +130,9 @@ export class ProjetosController {
             const { id } = <IId>(<unknown>req.params)
 
             await prisma.projetos.delete({
-                where:{
-                    id
-                }
+                where: {
+                    id,
+                },
             })
 
             return res.status(200).json({
