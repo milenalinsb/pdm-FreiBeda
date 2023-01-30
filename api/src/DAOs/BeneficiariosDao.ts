@@ -25,37 +25,6 @@ export class BeneficiariosDao {
         return beneficiario;
 };
 
-async cadastrarBeneficiario({
-    nome,
-    data_Nascimento,
-    sexo,
-    cor_Declarada,
-    is_Menor,
-    responsavel_Menor,
-    profissao,
-    renda_Mensal,
-    id_fk_projeto
-}:IBeneficiario){
-
-    const isMenor = Boolean(is_Menor);
-
-    const beneficiario = await prisma.beneficiarios.create({
-        data:{
-            nome,
-            data_Nascimento: moment( data_Nascimento, 'YYYY-MM-DD').toDate(),
-            sexo,
-            cor_Declarada,
-            is_Menor: isMenor,
-            responsavel_Menor,
-            profissao,
-            renda_Mensal,
-            id_fk_projeto
-        }
-    });
-
-    return beneficiario;
-};
-
 
 async buscarBeneficiarios() {
     
@@ -123,8 +92,8 @@ async deletarBeneficiario({id}:IId) {
 
     const dataAtualizacao = Date.now();
     const dataNascimento = new Date(data_Nascimento);
-    const isMenor = Boolean(is_Menor);
 
+    const isMenor = Boolean(is_Menor);
 
      const novoBeneficiario = await prisma.beneficiarios .update({
          where:{
@@ -132,14 +101,13 @@ async deletarBeneficiario({id}:IId) {
          },
          data: {
             nome,
-            data_Nascimento: dataNascimento,
+            data_Nascimento: moment( data_Nascimento, 'YYYY-MM-DD').toDate(),
             sexo,
             cor_Declarada,
             is_Menor: isMenor,
             responsavel_Menor,
             profissao,
             renda_Mensal,
-            id_fk_projeto,
             modified_At: new Date(dataAtualizacao)
          }, 
      });

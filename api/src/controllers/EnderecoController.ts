@@ -8,6 +8,7 @@ import { ILocalization } from '../types/types.localization'
 
 const enderecoDao = new EnderecoDao()
 
+
 export class EnderecoController {
     async registrarEndereco(req: Request, res: Response) {
         try {
