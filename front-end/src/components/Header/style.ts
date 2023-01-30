@@ -10,8 +10,9 @@ export const styles = StyleSheet.create({
         
     },
     infoProfile: {
+        flex: 0.9,
         height: 48,
-        marginRight: 20
+        marginRight: 25
     },
     nome: {
         color: "#000000",
