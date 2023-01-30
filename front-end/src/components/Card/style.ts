@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../theme';
+
 
 export const styles = StyleSheet.create({
     card: {
-        width: 160,
+        width: 170,
         height: 170,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: `${theme.colors.primary[900]}`,
         marginRight: 6,
         marginTop: 3
     },

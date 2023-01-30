@@ -1,8 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import {  PrismaClient,Prisma } from '@prisma/client';
 import { IId } from '../types/types.id';
 import { IAtualizarOSC, ICadastrarOsc, IExisteOSC } from '../types/types.osc';
 
 const prisma = new PrismaClient();
+Prisma.EnderecosScalarFieldEnum
 
 export class OscDao {
     
@@ -28,7 +29,8 @@ export class OscDao {
         data_Fundacao,
         publico_Alvo,
         missao,
-        visao
+        visao,
+        endereco
     }:ICadastrarOsc){
 
         const data = new Date(data_Fundacao);
@@ -40,7 +42,12 @@ export class OscDao {
                 data_Fundacao: data,
                 publico_Alvo,
                 missao,
-                visao
+                visao,
+                endereco:{
+                    connect:{
+                        id:endereco.id
+                    }
+                }
             }
         });
 
@@ -49,7 +56,11 @@ export class OscDao {
 
     async buscarOSC() {
         
-        const osc = await prisma.oSC.findMany();
+        const osc = await prisma.oSC.findMany({
+            include:{
+                endereco:true
+            }
+        });
 
         if(osc.length === 0) {
             throw new Error("Não há organizações cadastradas no sistema.");

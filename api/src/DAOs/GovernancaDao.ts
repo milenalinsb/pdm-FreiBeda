@@ -1,17 +1,19 @@
 import { PrismaClient } from '@prisma/client';
 import { IAtualizarGovernanca, IGovernanca } from '../types/types.governanca';
 import { IId } from '../types/types.id';
+import { RegistrarGovernancaDTO } from '../validators/Governancas.dtos';
 
 const prisma = new PrismaClient();
 
 export class GovernancaDao {
 
-    async governancaExiste({ nome, cargo }:IGovernanca) {
+    async governancaExiste({ nome, cargo,idOsc }:RegistrarGovernancaDTO) {
              
         const governanca = await prisma.governanca.findFirst({
             where:{
                 nome,
-                cargo
+                cargo,
+                id_fk_osc:idOsc
             }
         });
 
@@ -22,12 +24,17 @@ export class GovernancaDao {
         return governanca;
 };
 
-async cadastrarGovernanca({ nome, cargo }:IGovernanca){
+async cadastrarGovernanca({ nome, cargo,idOsc }:RegistrarGovernancaDTO){
 
     const governanca = await prisma.governanca.create({
         data:{
             nome,
-            cargo
+            cargo,
+            osc:{
+                connect:{
+                    id:idOsc,
+                }
+            }
         }
     });
 

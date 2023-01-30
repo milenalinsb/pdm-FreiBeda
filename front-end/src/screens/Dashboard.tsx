@@ -1,33 +1,31 @@
-import { HStack, ScrollView } from "native-base";
+import { Box, ScrollView } from "native-base";
 import { TouchableOpacity } from "react-native";
-import { Card } from "../components/Card";
+import { AddBtn } from "../components/AddBtn";
 import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
+import { OcsList } from "../components/OcsList";
 import { NavigationProps } from "../types/navigation";
-import { logout } from "../services/logout";
 
 export const Dashboard = ({ navigation }: NavigationProps) => {
   return (
     <>
-      <ScrollView>
-        <Header
-          nome="Cooperativa Terra e Vida - CTV"
-          local="Recife, Pernambuco"
-        />
-        <HStack space={3} justifyContent="center">
-          <Card texto="Perfil da OSC" icon={"group"} />
-          <Card texto="Perfil da OSC" icon={"group"} />
-        </HStack>
-        <HStack space={3} justifyContent="center">
-          <Card />
-          <TouchableOpacity
-            onPress={() => logout({navigation})}
-            activeOpacity={0.8}
-          >
-          <Card texto="Sair" icon={"close"} />
-          </TouchableOpacity>
-        </HStack>
+      <ScrollView bg={"#ffffff"}>
+        <Box marginTop={15}>
+          <OcsList
+            navigation={navigation}
+            navigate={function (arg0: string, params: any): unknown {
+              throw new Error("Function not implemented.");
+            }}
+          />
+        </Box>
       </ScrollView>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("OscForme");
+        }}
+        activeOpacity={0.8}
+      >
+        <AddBtn />
+      </TouchableOpacity>
       <Footer navigation={navigation} page={"Dashboard"} />
     </>
   );

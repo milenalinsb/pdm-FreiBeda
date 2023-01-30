@@ -14,6 +14,12 @@ routesGovernanca.get('/governanca/buscarGovernanca',
 routesGovernanca.get('/governanca/buscarGovernanca/:id',
                     verificarToken,
                     governancaController.buscarGovernancaById);
+routesGovernanca.get('/governanca/buscarGovernanca/:id',
+                    verificarToken,
+                    governancaController.buscarGovernancaById);
+routesGovernanca.get('/governanca/buscarGovernancaOsc/:idOsc',
+                    verificarToken,
+                    governancaController.buscarGovernancaByIdOsc);
 routesGovernanca.post('/governanca/cadastrarGovernanca',
                     verificarToken,
                     makeValidateBody(RegistrarGovernancaDTO),

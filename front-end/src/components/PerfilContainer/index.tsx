@@ -8,7 +8,7 @@ type Pros = {
   
 export const PerfilContainer= ({children}:Pros) => {
     return(<>
-   <ScrollView>
+   <ScrollView bg={"#ffffff"}>
     <Box style={styles.container}>
     {children}
     </Box>

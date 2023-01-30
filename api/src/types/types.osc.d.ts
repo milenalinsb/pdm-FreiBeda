@@ -1,3 +1,6 @@
+interface IEnderecoID{
+    id: string
+}
 
 export interface ICadastrarOsc{
     nome: string;
@@ -6,6 +9,7 @@ export interface ICadastrarOsc{
     publico_Alvo: string;
     missao: string;
     visao: string;
+    endereco:IEnderecoID
 };
 
 export interface IAtualizarOSC{

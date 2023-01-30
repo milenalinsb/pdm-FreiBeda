@@ -1,16 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../theme';
 
 export const styles = StyleSheet.create({
     header: {
-        margin: 20,
-        width: "90%",
-        height: 70,
+        margin: 25,
+        marginBottom:15,
+        height: 80,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
-        borderBottomColor: "#E3E3E3",
-        borderBottomWidth: 2,
+        
     },
     infoProfile: {
         flex: 0.9,
@@ -18,12 +15,12 @@ export const styles = StyleSheet.create({
         marginRight: 25
     },
     nome: {
-        color: "#212121",
+        color: "#000000",
         fontSize: 18,
-        fontWeight: "700"
+        fontWeight: "700",
     },
     local: {
-        color: "#ADADB4",
+        color: "#000000",
         fontSize: 12
     }
 });

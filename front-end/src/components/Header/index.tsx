@@ -1,27 +1,42 @@
-import { Avatar, Text, Box } from 'native-base';
-import { styles } from './style';
-import { theme } from '../../theme';
-import React from 'react';
+import { Avatar, Box, Text } from "native-base";
+import React, { useEffect, useState } from "react";
+import { styles } from "./style";
 
 type Props = {
-    nome?: String,
-    local?: String
-}
-
-const InfoProfile = ({ nome, local }: Props) => {
-    return (
-        <Box style={styles.infoProfile}>    
-            <Text style={styles.nome}>{nome}</Text>
-            <Text style={styles.local}>{local}</Text>
-        </Box>
-    )
+  nome: String;
+  local: String;
+  sigla: String;
 };
 
-export const Header = ({ nome, local }: Props) => {
-    return (
-        <Box style={styles.header}>
-            <Avatar bgColor={theme.colors.primary[900]} />
-            <InfoProfile nome={nome ? nome : 'Cooperativa'} local={local ? local : 'Município, UF'} />
-        </Box>
-    )
+const randomHex = () => {
+  let n = (Math.random() * 0xfffff * 1000000).toString(16);
+  return "#" + n.slice(0, 6);
+};
+
+const InfoProfile = ({ nome, local }: Props) => {
+
+  return (
+    <Box style={styles.infoProfile}>
+      <Text style={styles.nome}>{nome}</Text>
+      <Text style={styles.local}>{local}</Text>
+    </Box>
+  );
+};
+
+export const Header = ({ nome, local, sigla }: Props) => {
+
+  const [color,setColor]=useState("green.500")
+
+  useEffect(()=>{
+    setColor(randomHex())
+  },[])
+
+  return (
+    <Box bg={"#ffffff"}>
+      <Box style={styles.header}>
+        <Avatar bg={color} marginRight={"1/6"} >{sigla}</Avatar>
+        <InfoProfile sigla={sigla} nome={nome} local={local} />
+      </Box>
+      </Box>
+  );
 };
