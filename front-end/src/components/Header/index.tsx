@@ -1,5 +1,6 @@
 import { Avatar, Box, Text } from "native-base";
 import React, { useEffect, useState } from "react";
+import { Divider } from 'native-base';
 import { styles } from "./style";
 
 type Props = {
@@ -19,8 +20,10 @@ const InfoProfile = ({ nome, local }: Props) => {
     <Box style={styles.infoProfile}>
       <Text style={styles.nome}>{nome}</Text>
       <Text style={styles.local}>{local}</Text>
+      <Divider bg = "#F7F8FC" my={4} width={'200px'}/>
     </Box>
   );
+
 };
 
 export const Header = ({ nome, local, sigla }: Props) => {
@@ -40,3 +43,5 @@ export const Header = ({ nome, local, sigla }: Props) => {
       </Box>
   );
 };
+
+
