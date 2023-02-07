@@ -1,7 +1,7 @@
 import { View, Box } from "native-base";
 import { InputText } from "../components/InputText";
 
-export const PerfilOSC = () => {
+export const PerfilOsc = () => {
     return (
         <View>
             <Box m={6}>
