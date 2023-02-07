@@ -30,7 +30,7 @@ export const Osc = ({ navigation, route }: Props) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("PerfilOsc", route.params);
+              navigation.navigate("ProjetosOsc", route.params);
             }}
             activeOpacity={0.8}
           >
