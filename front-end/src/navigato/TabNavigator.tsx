@@ -9,6 +9,10 @@ import { Osc } from "../screens/Osc";
 import { OscForme } from "../screens/OscForme";
 import { Perfil } from "../screens/Perfil";
 import { PerfilOsc } from "../screens/PerfilOsc";
+import { ProjetosOsc } from "../screens/ProjetosOsc";
+import { CadastrarProjetos } from "../screens/CadastrarProjetos";
+import { ProjetoOsc } from "../screens/ProjetoOSC";
+import { ProjetoOscEdit } from "../screens/ProjetoOscEdit";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +34,10 @@ export const TabNavigator = () => {
       <Tab.Screen name="Governancas" component={Governancas} />
       <Tab.Screen name="GovernancaForme" component={GovernancaForme} />
       <Tab.Screen name="GovernancaFormeEdit" component={GovernancaFormeEdit} />
+      <Tab.Screen name="ProjetosOsc" component={ProjetosOsc} />
+      <Tab.Screen name="ProjetoOSC" component={ProjetoOsc} />
+      <Tab.Screen name="ProjetoOscEdit" component={ProjetoOscEdit} />
+      <Tab.Screen name="CadastrarProjetos" component={CadastrarProjetos} />
     </Tab.Navigator>
   );
 };
