@@ -1,15 +1,12 @@
-import { StyleSheet } from 'react-native';
-
-
 export const styles = StyleSheet.create({
     card: {
-        width: 170,
-        height: 170,
+        width: 150,
+        height: 160,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginRight: 6,
-        marginTop: 3
+        marginRight: 1,
+        marginTop: 9
     },
     textoCard: {
         fontSize: 18,
