@@ -27,7 +27,7 @@ export const ProjetoOscEdit = ({ navigation, route }: Props) => {
             >
                 <Back text="Projetos" />
             </TouchableOpacity>
-            <ScrollView backgroundColor={"#FFF"}>
+            <ScrollView bg={"#FFF"}>
                 <Formik
                     validate={createValidator(ProjetosDTO)}
                     initialValues={{
