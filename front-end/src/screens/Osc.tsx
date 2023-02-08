@@ -49,7 +49,15 @@ export const Osc = ({ navigation, route }: Props) => {
           >
             <Card texto="Localização" icon={"map-marker"} />
           </TouchableOpacity>
-          <Card texto="Beneficiarios" icon={"male"} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("BeneficiariosOsc", {
+                ...route.params,
+                paramPropKey: "paramPropValue"
+              })
+            }}>
+            <Card texto="Beneficiarios" icon={"male"} />
+          </TouchableOpacity>
         </HStack>
       </ScrollView>
       <Footer navigation={navigation} page={"Dashboard"} />

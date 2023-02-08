@@ -9,6 +9,7 @@ import { theme } from "../theme"
 import { IProjetos } from "../types/projetos"
 import { InfoBlock } from "../components/InfoBlock"
 import { IBeneficiario } from "../types/beneficiario"
+import { TouchableOpacity } from "react-native-gesture-handler"
 
 type Props = {
     navigation: NavigationProps,
@@ -37,7 +38,11 @@ export const ProjetoOsc = ({ navigation, route }: Props) => {
     });
     return (
         <>
-            <Back text="Projetos" />
+            <TouchableOpacity onPress={() => {
+                navigation.navigate("ProjetosOsc", route.params)
+            }}>
+                <Back text="Projetos" />
+            </TouchableOpacity>
             <ScrollView backgroundColor="#fff" flex={1}>
                 <Center>
                     <Text fontSize={32} color={`${theme.colors.primary[900]}`}>{projeto[0]?.nome}</Text>
