@@ -18,8 +18,16 @@ import { ILogin } from "../../types/login";
 import { NavigationProps } from "../../types/navigation";
 import { Button } from "../Button";
 import { styles } from "./styles";
+import { View,TextInput,TouchableOpacity } from "react-native";
+import {Ionicons} from '@expo/vector-icons';
+import React, {useState} from 'react';
+
+
 
 export const FormLogin = ({ navigation }: NavigationProps) => {
+  const[input,setInput] = useState('');
+  const[hidePass, setHidePass] = useState(true);
+
   return (
     <Center style={styles.container} w="100%">
       <Formik
@@ -89,9 +97,9 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
               fontWeight="medium"
               size="xs"
             >
-              Inscreva-se para continuar!
+                            Inscreva-se para continuar!
             </Heading>
-            <VStack space={3} mt="5">
+            <VStack space={3} mt="5"> 
               <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
                 <Input
@@ -107,12 +115,27 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
               </FormControl>
               <FormControl>
                 <FormControl.Label>Senha</FormControl.Label>
-                <Input
+                <View>
+                { <Input
+                  secureTextEntry={hidePass}
                   onBlur={handleBlur("password")}
+
                   value={values.password}
                   onChangeText={handleChange("password")}
-                  type="password"
+                  type="password" 
                 />
+                 }
+                  
+                  <TouchableOpacity style={styles.icon} onPress={ () => setHidePass(!hidePass) }>
+                   { hidePass ? 
+                     <Ionicons name="eye" color="#8ADE48" size={25} />
+                     :
+                     <Ionicons name="eye-off" color="#8ADE48" size={25} />
+                   }
+                 </TouchableOpacity>
+                
+                </View>
+
                 {errors.password && touched.password ? (
                   <Text color={"warning.500"} fontSize="xs">
                     {errors.password}
@@ -127,3 +150,4 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
     </Center>
   );
 };
+
