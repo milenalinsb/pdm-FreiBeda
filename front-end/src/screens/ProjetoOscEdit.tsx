@@ -22,12 +22,12 @@ export const ProjetoOscEdit = ({ navigation, route }: Props) => {
     return (
         <>
             <TouchableOpacity
-                onPress={() => navigation.navigate("Projetos", route.params)}
+                onPress={() => navigation.navigate("ProjetosOsc", route.params)}
                 activeOpacity={0.8}
             >
                 <Back text="Projetos" />
             </TouchableOpacity>
-            <ScrollView bg={"#FFF"}>
+            <ScrollView backgroundColor={"#FFFFFF"}>
                 <Formik
                     validate={createValidator(ProjetosDTO)}
                     initialValues={{

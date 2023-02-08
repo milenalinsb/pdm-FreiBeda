@@ -13,6 +13,9 @@ import { ProjetosOsc } from "../screens/ProjetosOsc";
 import { CadastrarProjetos } from "../screens/CadastrarProjetos";
 import { ProjetoOsc } from "../screens/ProjetoOSC";
 import { ProjetoOscEdit } from "../screens/ProjetoOscEdit";
+import { BeneficiariosOsc } from "../screens/BeneficiariosOsc";
+import { CadastrarBeneficiario } from "../screens/CadastrarBeneficiario";
+import { BeneficiarioEdit } from "../screens/BeneficiarioEdit";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +41,9 @@ export const TabNavigator = () => {
       <Tab.Screen name="ProjetoOSC" component={ProjetoOsc} />
       <Tab.Screen name="ProjetoOscEdit" component={ProjetoOscEdit} />
       <Tab.Screen name="CadastrarProjetos" component={CadastrarProjetos} />
+      <Tab.Screen name="BeneficiariosOsc" component={BeneficiariosOsc} />
+      <Tab.Screen name="CadastrarBeneficiario" component={CadastrarBeneficiario} />
+      <Tab.Screen name="BeneficiarioEdit" component={BeneficiarioEdit} />
     </Tab.Navigator>
   );
 };

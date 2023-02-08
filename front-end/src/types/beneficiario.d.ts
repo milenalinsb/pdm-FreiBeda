@@ -1,4 +1,5 @@
 export type IBeneficiario = {
+    id: string,
     nome: string,
     data_Nascimento: Date,
     sexo: string,
