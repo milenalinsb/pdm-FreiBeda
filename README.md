@@ -19,5 +19,5 @@ Baixe as dependências do projeto
 
 ## :octocat: Desenvolvedores 
 
-| [<img src="https://avatars.githubusercontent.com/u/60551389?v=4" width=115><br><sub>Allyson Abreu</sub>](https://github.com/AllysonAbreu) |  [<img src="https://avatars.githubusercontent.com/u/20650067?v=4" width=115><br><sub>Fabíola Diniz</sub>](https://github.com/fabioladiniz97) |  [<img src="https://avatars.githubusercontent.com/u/44758448?v=4" width=115><br><sub>Francisco Weslley</sub>](https://github.com/weslleycz) | [<img src="https://avatars.githubusercontent.com/u/48775921?v=4" width=115><br><sub>Milena Lins</sub>](https://github.com/milenalinsb)| [<img src="https://avatars.githubusercontent.com/u/65923695?v=4" width=115><br><sub>Moacir David</sub>](https://github.com/moacirdavidag) |
-| :---: | :---: | :---: | :---: | :---: 
+| [<img src="https://avatars.githubusercontent.com/u/60551389?v=4" width=115><br><sub>Allyson Abreu</sub>](https://github.com/AllysonAbreu) |  [<img src="https://avatars.githubusercontent.com/u/20650067?v=4" width=115><br><sub>Fabíola Diniz</sub>](https://github.com/fabioladiniz97) |  [<img src="https://avatars.githubusercontent.com/u/44758448?v=4" width=115><br><sub>Francisco Weslley</sub>](https://github.com/weslleycz) | [<img src="https://avatars.githubusercontent.com/u/65923695?v=4" width=115><br><sub>Moacir David</sub>](https://github.com/moacirdavidag) |
+| :---: | :---: | :---: | :---: | 
