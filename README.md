@@ -27,6 +27,8 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 ### 🎲 Rodando o Back End (servidor)
 
+1. Usando o Node.js
+
 ```bash
 # Clone este repositório
 $ git clone https://github.com/milenalinsb/pdm-FreiBeda.git
@@ -44,6 +46,24 @@ $ npm install
 $ npm run dev
 ```
 
+2. Usando o yarn
+
+```bash
+# Clone este repositório
+$ git clone https://github.com/milenalinsb/pdm-FreiBeda.git
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd pdm-FreiBeda
+
+# Vá para a pasta server
+$ cd api
+
+# Instale as dependências
+$ yarn 
+
+# Execute a aplicação 
+$ yarn run dev
+```
 
 ## :octocat: Desenvolvedores 
  
