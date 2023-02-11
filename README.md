@@ -20,9 +20,8 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ### :arrow_forward:  Pré-requisitos
 
-Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). 
-[Prisma](https://www.prisma.io/studio)
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas: [Node.js](https://nodejs.org/en/). ou [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable) e o
+[Prisma](https://www.prisma.io/studio).
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
 ### 🎲 Rodando o Back End (servidor)
@@ -46,7 +45,7 @@ $ npm install
 $ npm run dev
 ```
 
-2. Usando o yarn
+2. Usando o Yarn
 
 ```bash
 # Clone este repositório
@@ -63,6 +62,38 @@ $ yarn
 
 # Execute a aplicação 
 $ yarn run dev
+```
+
+### :iphone: Rodando o Front-End
+1. Usando Node.js
+```bash
+
+# Acesse a pasta do projeto no terminal/cmd
+$ cd pdm-FreiBeda
+
+# Vá para a pasta do Front
+$ cd front-end
+
+# Instale as dependências
+$ npm install 
+
+# Execute a aplicação 
+$ npx expo start 
+
+```
+2. Usando Yarn
+```
+# Acesse a pasta do projeto no terminal/cmd
+$ cd pdm-FreiBeda
+
+# Vá para a pasta server
+$ cd front-end
+
+# Instale as dependências
+$ yarn 
+
+# Execute a aplicação 
+$ yarn expo start 
 ```
 
 ## :octocat: Desenvolvedores 
