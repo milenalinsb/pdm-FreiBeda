@@ -13,12 +13,20 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       marginLeft: '85%',
       marginBottom:'-15%',
-      position:'absolute'
-      
+      position:'absolute'  
     },
 
     View:{
       position:'relative'
+    },
+    logo:{
+      width:'100%',
+      display:'flex',
+      alignItems:'center',
+      justifyContent:'center',
+      marginTop: '-50%',
+      marginBottom:42
     }
+   
   });
   
