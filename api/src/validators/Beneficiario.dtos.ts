@@ -6,12 +6,11 @@ export class RegistrarBeneficiariosDTO {
     @IsNotEmpty({ message: 'Esse campo e obrigatório' })
     nome?:string
 
-    @IsString()
+    @IsDate({message:'Data de aniversário não valida'})
     @IsNotEmpty({ message: 'Esse campo e obrigatório' })
     data_Nascimento?:string
 
     @IsString()
-    @IsDate({message:'Data de aniversário não valida'})
     @IsNotEmpty({ message: 'Esse campo e obrigatório' })
     sexo?:string
     

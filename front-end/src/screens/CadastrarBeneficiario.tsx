@@ -32,18 +32,18 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                         data_Nascimento: "",
                         sexo: "",
                         cor_Declarada: "",
-                        is_Menor: "false",
+                        is_Menor: "",
                         responsavel_Menor: "",
                         profissao: "",
                         renda_Mensal: ""
                     }}
                     onSubmit={async (values, { resetForm, setErrors }) => {
+                        console.log("Entrou")
                         try {
                             const token = await getToken("@token");
-                            const projeto = await api.post(
+                            const beneficiario = await api.post(
                                 "/beneficiarios/registrarBeneficiarios",
                                 {
-                                    id: route.params.id,
                                     nome: values.nome,
                                     data_Nascimento: values.data_Nascimento,
                                     sexo: values.sexo,
@@ -51,7 +51,8 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     is_Menor: values.is_Menor,
                                     responsavel_Menor: values.responsavel_Menor,
                                     profissao: values.profissao,
-                                    renda_Mensal: values.renda_Mensal
+                                    renda_Mensal: values.renda_Mensal,
+                                    id_fk_projeto: route.params.idProjeto
                                 },
                                 {
                                     headers: {
@@ -67,7 +68,7 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                 textBody: "Criada com sucesso",
                                 button: "Ok",
                                 onPressButton() {
-                                    navigation.navigate("Osc", {
+                                    navigation.navigate("BeneficiariosOsc", {
                                         paramPropKey: "paramPropValue",
                                     });
                                     Dialog.hide();
@@ -127,10 +128,10 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     <FormControl>
                                         <FormControl.Label>Data de Nascimento</FormControl.Label>
                                         <Input
-                                            onBlur={handleBlur("data_nascimento")}
+                                            onBlur={handleBlur("data_Nascimento")}
                                             value={values.data_Nascimento}
                                             placeholder="XX/XX/XX"
-                                            onChangeText={handleChange("data_nascimento")}
+                                            onChangeText={handleChange("data_Nascimento")}
                                             type="text"
                                         />
                                         {errors.data_Nascimento && touched.data_Nascimento ? (
@@ -159,10 +160,10 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     <FormControl>
                                         <FormControl.Label>Cor declarada</FormControl.Label>
                                         <Input
-                                            onBlur={handleBlur("cor_declarada")}
+                                            onBlur={handleBlur("cor_Declarada")}
                                             value={values.cor_Declarada}
                                             placeholder="Cor declarada"
-                                            onChangeText={handleChange("cor_declarada")}
+                                            onChangeText={handleChange("cor_Declarada")}
                                             type="text"
                                         />
                                         {errors.cor_Declarada && touched.cor_Declarada ? (
@@ -175,10 +176,10 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     <FormControl>
                                         <FormControl.Label>O beneficiário é menor</FormControl.Label>
                                         <Input
-                                            onBlur={handleBlur("menor")}
+                                            onBlur={handleBlur("is_Menor")}
                                             value={values.is_Menor}
                                             placeholder="true"
-                                            onChangeText={handleChange("menor")}
+                                            onChangeText={handleChange("is_Menor")}
                                             type="text"
                                         />
 
@@ -192,10 +193,10 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     <FormControl>
                                         <FormControl.Label>Responsável</FormControl.Label>
                                         <Input
-                                            onBlur={handleBlur("responsavel")}
+                                            onBlur={handleBlur("responsavel_Menor")}
                                             value={values.responsavel_Menor}
                                             placeholder="Responsável"
-                                            onChangeText={handleChange("responsavel")}
+                                            onChangeText={handleChange("responsavel_Menor")}
                                             type="text"
                                         />
 
@@ -227,10 +228,10 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     <FormControl>
                                         <FormControl.Label>Renda mensal</FormControl.Label>
                                         <Input
-                                            onBlur={handleBlur("renda")}
+                                            onBlur={handleBlur("renda_Mensal")}
                                             value={values.renda_Mensal}
                                             placeholder="R$ 1000,00"
-                                            onChangeText={handleChange("renda")}
+                                            onChangeText={handleChange("renda_Mensal")}
                                             type="text"
                                         />
 

@@ -8,7 +8,7 @@ import { api } from "../services/api";
 import { getToken } from "../services/asyncStorage";
 import { ALERT_TYPE, Dialog } from "react-native-alert-notification";
 import { AxiosError } from "../types/axiosError";
-import { Box, Center, FormControl, Heading, Input, VStack, Text } from "native-base";
+import { Box, Center, FormControl, Heading, Input, VStack, Text, Alert } from "native-base";
 import { Footer } from "../components/Footer";
 import { Button } from "../components/Button";
 
@@ -35,7 +35,7 @@ export const ProjetoOscEdit = ({ navigation, route }: Props) => {
                         atividades: "",
                         impacto: "",
                         objetivo: "",
-                        oscID: "",
+                        oscID: route.params.id,
                         patrocinadores: "",
                         responsavel: "",
                         valor: ""
@@ -47,9 +47,9 @@ export const ProjetoOscEdit = ({ navigation, route }: Props) => {
                                 `/projetos/atualizarProjetos/${route.params.idProjeto}`,
                                 {
                                     nome: values.nome,
-                                    atividades: values.nome,
-                                    impacto: values.nome,
-                                    objetivo: values.nome,
+                                    atividades: values.atividades,
+                                    impacto: values.impacto,
+                                    objetivo: values.objetivo,
                                     oscID: route.params.id,
                                     patrocinadores: values.patrocinadores,
                                     responsavel: values.responsavel,
@@ -77,7 +77,7 @@ export const ProjetoOscEdit = ({ navigation, route }: Props) => {
                             });
                         } catch (error) {
                             const data = error as AxiosError;
-                            console.log(error)
+                            console.log(data)
                         }
                     }}
                 >
