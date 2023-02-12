@@ -8,5 +8,6 @@ export type IBeneficiario = {
     responsavel_Menor?: string,
     profissao: string,
     renda_Mensal: string,
-    avatar?: string
+    avatar?: string,
+    id_fk_projeto?: string
 }

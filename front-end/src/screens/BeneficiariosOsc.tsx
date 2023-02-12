@@ -30,7 +30,7 @@ export const BeneficiariosOsc = ({ navigation, route }: Props) => {
             setBeneficiarios(data.data.beneficiarios)
         })()
 
-    })
+    }, [route])
     const handlingDelete = async (id: string) => {
         const token = await getToken("@token");
         await api.delete(`/beneficiarios/deletarBeneficiarios/${id}`, {
@@ -39,7 +39,7 @@ export const BeneficiariosOsc = ({ navigation, route }: Props) => {
             },
         });
         const req = await api.get(
-            `/beneficiarios/buscarBeneficiarios/${route.params.id}`,
+            `/beneficiarios/buscarBeneficiarios/${id}`,
             {
                 headers: {
                     authorization: token,
@@ -90,6 +90,7 @@ export const BeneficiariosOsc = ({ navigation, route }: Props) => {
                                                 onPress={() => {
                                                     navigation.navigate("BeneficiarioEdit", {
                                                         idBeneficiario: item.id,
+                                                        idProjeto: route.params.id,
                                                         ...route.params,
                                                     });
                                                 }}
@@ -129,7 +130,10 @@ export const BeneficiariosOsc = ({ navigation, route }: Props) => {
             </ScrollView>
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate("CadastrarBeneficiario", route.params);
+                    navigation.navigate("CadastrarBeneficiario", {
+                        idProjeto: route.params.id,
+                        ...route.params
+                    });
                 }}
                 activeOpacity={0.8}
             >

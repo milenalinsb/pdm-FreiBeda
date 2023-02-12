@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from "class-validator";
 export class BeneficiarioDTO {
     @IsString()
     @IsNotEmpty({ message: "Esse campo e obrigatório" })
-    nome!: string
+    nome?: string
     @IsDate()
     @IsNotEmpty({ message: "Esse campo e obrigatório" })
     data_Nascimento!: Date
@@ -25,4 +25,6 @@ export class BeneficiarioDTO {
     @IsNotEmpty({ message: "Esse campo e obrigatório" })
     renda_Mensal?: string
     avatar?: string
+    @IsString()
+    id_fk_projeto!: string
 }
