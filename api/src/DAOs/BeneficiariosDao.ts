@@ -30,10 +30,6 @@ async buscarBeneficiarios() {
     
     const beneficiarios = await prisma.beneficiarios.findMany();
 
-    if(beneficiarios.length === 0) {
-        throw new Error("Não há beneficiários cadastrados no sistema.");
-    };
-
     return beneficiarios;
 };
 

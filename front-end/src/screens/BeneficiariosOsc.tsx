@@ -37,16 +37,15 @@ export const BeneficiariosOsc = ({ navigation, route }: Props) => {
             headers: {
                 authorization: token,
             },
-        });
-        const req = await api.get(
-            `/beneficiarios/buscarBeneficiarios/${id}`,
-            {
+        })
+        .then(async () => {
+            await api.get(`/beneficiarios/buscarBeneficiarios`, {
                 headers: {
-                    authorization: token,
+                    authorization:token
                 },
-            }
-        );
-        setBeneficiarios(req.data.beneficiario);
+            }).then(({ data }) => setBeneficiarios(data.beneficiarios));
+        });
+        
     }
     return (
         <>
