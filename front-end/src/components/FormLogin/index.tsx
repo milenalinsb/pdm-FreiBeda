@@ -6,6 +6,7 @@ import {
   FormControl,
   Heading,
   Input,
+  Image,
   Text,
   VStack,
 } from "native-base";
@@ -18,8 +19,17 @@ import { ILogin } from "../../types/login";
 import { NavigationProps } from "../../types/navigation";
 import { Button } from "../Button";
 import { styles } from "./styles";
+import { View,TextInput,TouchableOpacity } from "react-native";
+import {Ionicons} from '@expo/vector-icons';
+import React, {useState} from 'react';
+import { convertError } from "class-validator-formik/dist/convertError";
+
+
 
 export const FormLogin = ({ navigation }: NavigationProps) => {
+  const[input,setInput] = useState('');
+  const[hidePass, setHidePass] = useState(true);
+
   return (
     <Center style={styles.container} w="100%">
       <Formik
@@ -69,29 +79,27 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
           handleBlur,
           handleSubmit,
         }) => (
-          <Box safeArea p="2" w="100%" maxW="290" py="8">
-            <Heading
+          <Box safeArea w="100%" py="8" px='8'>
+            <View style={styles.logo}>
+                <Image 
+                  source={require('../../../assets/logo.png')} 
+                  style={{width:130 ,height:130}} 
+                />
+              </View>
+
+            <Heading 
+              textAlign="center"
               size="lg"
-              color="coolGray.800"
-              _dark={{
-                color: "warmGray.50",
-              }}
+              color="#4a4a4a"
               fontWeight="semibold"
+             
+            
+
             >
-              Bem-vindo
+               SoliVida
             </Heading>
-            <Heading
-              mt="1"
-              color="coolGray.600"
-              _dark={{
-                color: "warmGray.200",
-              }}
-              fontWeight="medium"
-              size="xs"
-            >
-              Inscreva-se para continuar!
-            </Heading>
-            <VStack space={3} mt="5">
+
+            <VStack space={3} mt="2"> 
               <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
                 <Input
@@ -107,12 +115,27 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
               </FormControl>
               <FormControl>
                 <FormControl.Label>Senha</FormControl.Label>
-                <Input
+                <View>
+                { <Input
+                  secureTextEntry={hidePass}
                   onBlur={handleBlur("password")}
+
                   value={values.password}
                   onChangeText={handleChange("password")}
-                  type="password"
+                  type="password" 
                 />
+                 }
+                  
+                  <TouchableOpacity style={styles.icon} onPress={ () => setHidePass(!hidePass) }>
+                   { hidePass ? 
+                     <Ionicons name="eye" color="#8ADE48" size={25} />
+                     :
+                     <Ionicons name="eye-off" color="#8ADE48" size={25} />
+                   }
+                 </TouchableOpacity>
+                
+                </View>
+
                 {errors.password && touched.password ? (
                   <Text color={"warning.500"} fontSize="xs">
                     {errors.password}
@@ -127,3 +150,4 @@ export const FormLogin = ({ navigation }: NavigationProps) => {
     </Center>
   );
 };
+
