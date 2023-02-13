@@ -10,6 +10,10 @@ import { api } from "../services/api"
 import { ALERT_TYPE, Dialog } from "react-native-alert-notification"
 import { AxiosError } from "../types/axiosError"
 import { Button } from "../components/Button"
+import { useState } from "react"
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment"
+
 
 type Props = {
     navigation: NavigationProps,
@@ -17,6 +21,21 @@ type Props = {
 }
 
 export const BeneficiarioEdit = ({ navigation, route }: Props) => {
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [datePickerVisible, setDatePickerVisible] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisible(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisible(false);
+    };
+
+    const handleConfirm = (date: any) => {
+        setSelectedDate(date);
+        hideDatePicker();
+    };
     return (
         <>
             <TouchableOpacity onPress={() => (
@@ -29,7 +48,6 @@ export const BeneficiarioEdit = ({ navigation, route }: Props) => {
                     validate={createValidator(BeneficiarioDTO)}
                     initialValues={{
                         nome: "",
-                        data_Nascimento: "",
                         sexo: "",
                         cor_Declarada: "",
                         is_Menor: "",
@@ -45,7 +63,7 @@ export const BeneficiarioEdit = ({ navigation, route }: Props) => {
                                 {
                                     id: route.params.idBeneficiario,
                                     nome: values.nome,
-                                    data_Nascimento: values.data_Nascimento,
+                                    data_Nascimento: selectedDate,
                                     sexo: values.sexo,
                                     cor_Declarada: values.cor_Declarada,
                                     is_Menor: values.is_Menor,
@@ -127,19 +145,17 @@ export const BeneficiarioEdit = ({ navigation, route }: Props) => {
                                     </FormControl>
 
                                     <FormControl>
-                                        <FormControl.Label>Data de Nascimento</FormControl.Label>
-                                        <Input
-                                            onBlur={handleBlur("data_Nascimento")}
-                                            value={values.data_Nascimento}
-                                            placeholder="XX/XX/XX"
-                                            onChangeText={handleChange("data_Nascimento")}
-                                            type="text"
-                                        />
-                                        {errors.data_Nascimento && touched.data_Nascimento ? (
-                                            <Text color={"warning.500"} fontSize="xs">
-                                                {errors.data_Nascimento}
-                                            </Text>
-                                        ) : null}
+                                        <FormControl.Label>Data de nascimento</FormControl.Label>
+                                        <TouchableOpacity
+                                            onPress={() => showDatePicker()}
+                                            activeOpacity={0.8}
+                                        >
+                                            <Input
+                                                isDisabled
+                                                value={moment(selectedDate).format("DD/MM/YYYY")}
+                                                type="text"
+                                            />
+                                        </TouchableOpacity>
                                     </FormControl>
 
                                     <FormControl>
@@ -242,6 +258,15 @@ export const BeneficiarioEdit = ({ navigation, route }: Props) => {
                                             </Text>
                                         ) : null}
                                     </FormControl>
+
+                                    <DateTimePickerModal
+                                        textColor="#ffff"
+                                        date={selectedDate}
+                                        isVisible={datePickerVisible}
+                                        mode="date"
+                                        onConfirm={handleConfirm}
+                                        onCancel={hideDatePicker}
+                                    />
 
                                     <Button onPress={handleSubmit} text={"Atualizar"} />
                                 </VStack>

@@ -1,7 +1,7 @@
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { NavigationProps } from "../types/navigation"
 import { Back } from "../components/Back"
-import { Box, Center, FormControl, Heading, Input, ScrollView, VStack, Text } from "native-base"
+import { Box, Center, FormControl, Heading, Input, ScrollView, VStack, Text, CheckIcon, Select } from "native-base"
 import { Formik } from "formik"
 import createValidator from "class-validator-formik"
 import { BeneficiarioDTO } from "../dtos/beneficiario.dto"
@@ -10,6 +10,10 @@ import { api } from "../services/api"
 import { ALERT_TYPE, Dialog } from "react-native-alert-notification"
 import { AxiosError } from "../types/axiosError"
 import { Button } from "../components/Button"
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useState } from "react"
+import moment from "moment"
+
 
 type Props = {
     navigation: NavigationProps,
@@ -17,6 +21,24 @@ type Props = {
 }
 
 export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [datePickerVisible, setDatePickerVisible] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisible(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisible(false);
+    };
+
+    const handleConfirm = (date: any) => {
+        setSelectedDate(date);
+        hideDatePicker();
+    };
+
+
     return (
         <>
             <TouchableOpacity onPress={() => {
@@ -29,7 +51,6 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                     validate={createValidator(BeneficiarioDTO)}
                     initialValues={{
                         nome: "",
-                        data_Nascimento: "",
                         sexo: "",
                         cor_Declarada: "",
                         is_Menor: "",
@@ -38,21 +59,20 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                         renda_Mensal: ""
                     }}
                     onSubmit={async (values, { resetForm, setErrors }) => {
-                        console.log("Entrou")
                         try {
                             const token = await getToken("@token");
                             const beneficiario = await api.post(
                                 "/beneficiarios/registrarBeneficiarios",
                                 {
                                     nome: values.nome,
-                                    data_Nascimento: values.data_Nascimento,
+                                    data_Nascimento: selectedDate,
                                     sexo: values.sexo,
                                     cor_Declarada: values.cor_Declarada,
                                     is_Menor: values.is_Menor,
                                     responsavel_Menor: values.responsavel_Menor,
                                     profissao: values.profissao,
                                     renda_Mensal: values.renda_Mensal,
-                                    id_fk_projeto: route.params.idProjeto
+                                    id_fk_projeto: route.params.idOsc
                                 },
                                 {
                                     headers: {
@@ -105,7 +125,7 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                         color: "warmGray.50",
                                     }}
                                     fontWeight="semibold"
-                                 >
+                                >
                                     Cadastrar beneficiário
                                 </Heading>
                                 <VStack space={5} mt="5">
@@ -126,30 +146,29 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     </FormControl>
 
                                     <FormControl>
-                                        <FormControl.Label>Data de Nascimento</FormControl.Label>
-                                        <Input
-                                            onBlur={handleBlur("data_Nascimento")}
-                                            value={values.data_Nascimento}
-                                            placeholder="XX/XX/XX"
-                                            onChangeText={handleChange("data_Nascimento")}
-                                            type="text"
-                                        />
-                                        {errors.data_Nascimento && touched.data_Nascimento ? (
-                                            <Text color={"warning.500"} fontSize="xs">
-                                                {errors.data_Nascimento}
-                                            </Text>
-                                        ) : null}
+                                        <FormControl.Label>Data de nascimento</FormControl.Label>
+                                        <TouchableOpacity
+                                            onPress={() => showDatePicker()}
+                                            activeOpacity={0.8}
+                                        >
+                                            <Input
+                                                isDisabled
+                                                value={moment(selectedDate).format("DD/MM/YYYY")}
+                                                type="text"
+                                            />
+                                        </TouchableOpacity>
                                     </FormControl>
-                                    
-                                     <FormControl>
+
+
+                                    <FormControl>
                                         <FormControl.Label>Sexo</FormControl.Label>
-                                            <Select selectedValue={values.sexo} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
-                                                bg: "#8ADE48",
-                                                endIcon: <CheckIcon size="2" />
-                                                }} mt={1} onValueChange={handleChange("sexo")}>
-                                                <Select.Item label="Feminino" value="f" />
-                                                <Select.Item label="Masculino" value="m" />
-                                            </Select>
+                                        <Select selectedValue={values.sexo} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
+                                            bg: "#8ADE48",
+                                            endIcon: <CheckIcon size="2" />
+                                        }} mt={1} onValueChange={handleChange("sexo")}>
+                                            <Select.Item label="Feminino" value="f" />
+                                            <Select.Item label="Masculino" value="m" />
+                                        </Select>
 
                                         {errors.sexo && touched.sexo ? (
                                             <Text color={"warning.500"} fontSize="xs">
@@ -160,15 +179,15 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
 
                                     <FormControl>
                                         <FormControl.Label>Cor declarada</FormControl.Label>
-                                            <Select selectedValue={values.cor_Declarada} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
-                                                bg: "#8ADE48",
-                                                endIcon: <CheckIcon size="2" />
-                                                }} mt={1} onValueChange={handleChange("cor_Declarada")}>
-                                                <Select.Item label="Branca" value="branca" />
-                                                <Select.Item label="Preta" value="preta" />
-                                                <Select.Item label="Parda" value="parda" />
-                                                <Select.Item label="Amarela" value="amarela" />
-                                            </Select>
+                                        <Select selectedValue={values.cor_Declarada} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
+                                            bg: "#8ADE48",
+                                            endIcon: <CheckIcon size="2" />
+                                        }} mt={1} onValueChange={handleChange("cor_Declarada")}>
+                                            <Select.Item label="Branca" value="branca" />
+                                            <Select.Item label="Preta" value="preta" />
+                                            <Select.Item label="Parda" value="parda" />
+                                            <Select.Item label="Amarela" value="amarela" />
+                                        </Select>
 
 
                                         {errors.is_Menor && touched.is_Menor ? (
@@ -185,13 +204,13 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
 
                                     <FormControl>
                                         <FormControl.Label>O beneficiário é menor</FormControl.Label>
-                                            <Select selectedValue={values.is_Menor} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
-                                                bg: "#8ADE48",
-                                                endIcon: <CheckIcon size="2" />
-                                                }} mt={1} onValueChange={handleChange("is_Menor")}>
-                                                <Select.Item label="Sim" value="true" />
-                                                <Select.Item label="Não" value="false" />
-                                            </Select>
+                                        <Select selectedValue={values.is_Menor} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
+                                            bg: "#8ADE48",
+                                            endIcon: <CheckIcon size="2" />
+                                        }} mt={1} onValueChange={handleChange("is_Menor")}>
+                                            <Select.Item label="Sim" value="true" />
+                                            <Select.Item label="Não" value="false" />
+                                        </Select>
 
                                         {errors.is_Menor && touched.is_Menor ? (
                                             <Text color={"warning.500"} fontSize="xs">
@@ -252,6 +271,15 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                         ) : null}
                                     </FormControl>
 
+                                    <DateTimePickerModal
+                                        textColor="#ffff"
+                                        date={selectedDate}
+                                        isVisible={datePickerVisible}
+                                        mode="date"
+                                        onConfirm={handleConfirm}
+                                        onCancel={hideDatePicker}
+                                    />
+
                                     <Button onPress={handleSubmit} text={"Cadastrar"} />
                                 </VStack>
                             </Box>
@@ -263,4 +291,4 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
     )
 }
 
-                                    
+
