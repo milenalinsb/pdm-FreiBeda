@@ -18,7 +18,7 @@ type Props = {
 
 export const ProjetoOsc = ({ navigation, route }: Props) => {
     const [projeto, setProjeto] = useState<IProjetos[]>([]);
-    const [beneficiarios, setBeneficiarios] = useState<IBeneficiario[]>([]);
+    const [beneficiarios, setBeneficiarios] = useState<IBeneficiario[]>([])
     useEffect(() => {
         (async () => {
             const token = await getToken("@token");
@@ -27,13 +27,12 @@ export const ProjetoOsc = ({ navigation, route }: Props) => {
                     authorization: token,
                 },
             });
-            setProjeto(data.data)
-            const beneficiario = await api.get('/beneficiarios/buscarBeneficiarios', {
+            const beneficiarios = await api.get("/beneficiarios/buscarBeneficiarios", {
                 headers: {
                     authorization: token
                 }
             })
-            setBeneficiarios(beneficiario.data.beneficiarios)
+            setBeneficiarios(beneficiarios.data.beneficiarios)
         })()
     });
     return (
@@ -56,7 +55,7 @@ export const ProjetoOsc = ({ navigation, route }: Props) => {
                     <InfoBlock titulo={"Patrocinadores"} conteudo={projeto[0]?.patrocinadores} />
                     <InfoBlock titulo={"Beneficiários"} conteudo={
                         <FlatList data={beneficiarios} renderItem={({item, index}) => (
-                            <Text>{item.nome}</Text>
+                            <Text>Oi</Text>
                         )} />
                     }/>
                 </Box>

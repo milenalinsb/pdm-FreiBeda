@@ -89,7 +89,6 @@ export const BeneficiariosOsc = ({ navigation, route }: Props) => {
                                                 onPress={() => {
                                                     navigation.navigate("BeneficiarioEdit", {
                                                         idBeneficiario: item.id,
-                                                        idProjeto: route.params.id,
                                                         ...route.params,
                                                     });
                                                 }}

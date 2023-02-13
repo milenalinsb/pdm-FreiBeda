@@ -55,7 +55,7 @@ export const Osc = ({ navigation, route }: Props) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("BeneficiariosOsc", {
-                idOsc: route.params.id,
+                idProjeto: route.params.id,
                 ...route.params,
                 paramPropKey: "paramPropValue"
               })
