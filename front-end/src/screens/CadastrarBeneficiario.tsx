@@ -72,7 +72,7 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                     responsavel_Menor: values.responsavel_Menor,
                                     profissao: values.profissao,
                                     renda_Mensal: values.renda_Mensal,
-                                    id_fk_projeto: route.params.idOsc
+                                    id_fk_projeto: route.params.id
                                 },
                                 {
                                     headers: {
