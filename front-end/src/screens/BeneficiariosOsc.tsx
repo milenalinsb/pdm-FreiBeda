@@ -130,7 +130,7 @@ export const BeneficiariosOsc = ({ navigation, route }: Props) => {
             <TouchableOpacity
                 onPress={() => {
                     navigation.navigate("CadastrarBeneficiario", {
-                        idProjeto: route.params.id,
+                        idOsc: route.params.idOsc,
                         ...route.params
                     });
                 }}
