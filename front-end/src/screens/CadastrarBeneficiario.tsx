@@ -105,7 +105,7 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                         color: "warmGray.50",
                                     }}
                                     fontWeight="semibold"
-                                >
+                                 >
                                     Cadastrar beneficiário
                                 </Heading>
                                 <VStack space={5} mt="5">
@@ -140,16 +140,17 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
                                             </Text>
                                         ) : null}
                                     </FormControl>
-
-                                    <FormControl>
+                                    
+                                     <FormControl>
                                         <FormControl.Label>Sexo</FormControl.Label>
-                                        <Input
-                                            onBlur={handleBlur("sexo")}
-                                            value={values.sexo}
-                                            placeholder="M"
-                                            onChangeText={handleChange("sexo")}
-                                            type="text"
-                                        />
+                                            <Select selectedValue={values.sexo} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
+                                                bg: "#8ADE48",
+                                                endIcon: <CheckIcon size="2" />
+                                                }} mt={1} onValueChange={handleChange("sexo")}>
+                                                <Select.Item label="Feminino" value="f" />
+                                                <Select.Item label="Masculino" value="m" />
+                                            </Select>
+
                                         {errors.sexo && touched.sexo ? (
                                             <Text color={"warning.500"} fontSize="xs">
                                                 {errors.sexo}
@@ -159,13 +160,22 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
 
                                     <FormControl>
                                         <FormControl.Label>Cor declarada</FormControl.Label>
-                                        <Input
-                                            onBlur={handleBlur("cor_Declarada")}
-                                            value={values.cor_Declarada}
-                                            placeholder="Cor declarada"
-                                            onChangeText={handleChange("cor_Declarada")}
-                                            type="text"
-                                        />
+                                            <Select selectedValue={values.cor_Declarada} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
+                                                bg: "#8ADE48",
+                                                endIcon: <CheckIcon size="2" />
+                                                }} mt={1} onValueChange={handleChange("cor_Declarada")}>
+                                                <Select.Item label="Branca" value="branca" />
+                                                <Select.Item label="Preta" value="preta" />
+                                                <Select.Item label="Parda" value="parda" />
+                                                <Select.Item label="Amarela" value="amarela" />
+                                            </Select>
+
+
+                                        {errors.is_Menor && touched.is_Menor ? (
+                                            <Text color={"warning.500"} fontSize="xs">
+                                                {errors.is_Menor}
+                                            </Text>
+                                        ) : null}
                                         {errors.cor_Declarada && touched.cor_Declarada ? (
                                             <Text color={"warning.500"} fontSize="xs">
                                                 {errors.cor_Declarada}
@@ -175,13 +185,13 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
 
                                     <FormControl>
                                         <FormControl.Label>O beneficiário é menor</FormControl.Label>
-                                        <Input
-                                            onBlur={handleBlur("is_Menor")}
-                                            value={values.is_Menor}
-                                            placeholder="true"
-                                            onChangeText={handleChange("is_Menor")}
-                                            type="text"
-                                        />
+                                            <Select selectedValue={values.is_Menor} minWidth="200" accessibilityLabel="Choose Service" placeholder="Selecione" _selectedItem={{
+                                                bg: "#8ADE48",
+                                                endIcon: <CheckIcon size="2" />
+                                                }} mt={1} onValueChange={handleChange("is_Menor")}>
+                                                <Select.Item label="Sim" value="true" />
+                                                <Select.Item label="Não" value="false" />
+                                            </Select>
 
                                         {errors.is_Menor && touched.is_Menor ? (
                                             <Text color={"warning.500"} fontSize="xs">
@@ -252,3 +262,5 @@ export const CadastrarBeneficiario = ({ navigation, route }: Props) => {
         </>
     )
 }
+
+                                    
