@@ -32,7 +32,8 @@ export const ProjetoOsc = ({ navigation, route }: Props) => {
                     authorization: token
                 }
             })
-            setBeneficiarios(beneficiarios.data.beneficiarios)
+            setProjeto(data.data[0])
+            setBeneficiarios(beneficiarios.data.beneficiarios[0])
         })()
     });
     return (
@@ -44,15 +45,15 @@ export const ProjetoOsc = ({ navigation, route }: Props) => {
             </TouchableOpacity>
             <ScrollView backgroundColor="#fff" flex={1}>
                 <Center>
-                    <Text fontSize={32} color={`${theme.colors.primary[900]}`}>{projeto[0]?.nome}</Text>
+                    <Text fontSize={32} color={`${theme.colors.primary[900]}`}>{projeto?.nome}</Text>
                 </Center>
                 <Box m={10}>
-                    <InfoBlock titulo={"Objetivo"} conteudo={projeto[0]?.objetivo} />
-                    <InfoBlock titulo={"Atividades"} conteudo={projeto[0]?.atividades} />
-                    <InfoBlock titulo={"Impacto"} conteudo={projeto[0]?.impacto} />
-                    <InfoBlock titulo={"Responsável"} conteudo={projeto[0]?.responsavel} />
-                    <InfoBlock titulo={"Valor"} conteudo={`R$ ${projeto[0]?.valor}`} />
-                    <InfoBlock titulo={"Patrocinadores"} conteudo={projeto[0]?.patrocinadores} />
+                    <InfoBlock titulo={"Objetivo"} conteudo={projeto.objetivo} />
+                    <InfoBlock titulo={"Atividades"} conteudo={projeto.atividades} />
+                    <InfoBlock titulo={"Impacto"} conteudo={projeto.impacto} />
+                    <InfoBlock titulo={"Responsável"} conteudo={projeto.responsavel} />
+                    <InfoBlock titulo={"Valor"} conteudo={`R$ ${projeto.valor}`} />
+                    <InfoBlock titulo={"Patrocinadores"} conteudo={projeto.patrocinadores} />
                     <InfoBlock titulo={"Beneficiários"} conteudo={
                         <FlatList data={beneficiarios} renderItem={({item, index}) => (
                             <Text>Oi</Text>
