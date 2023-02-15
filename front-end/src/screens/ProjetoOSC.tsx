@@ -54,11 +54,6 @@ export const ProjetoOsc = ({ navigation, route }: Props) => {
                     <InfoBlock titulo={"Responsável"} conteudo={projeto.responsavel} />
                     <InfoBlock titulo={"Valor"} conteudo={`R$ ${projeto.valor}`} />
                     <InfoBlock titulo={"Patrocinadores"} conteudo={projeto.patrocinadores} />
-                    <InfoBlock titulo={"Beneficiários"} conteudo={
-                        <FlatList data={beneficiarios} renderItem={({item, index}) => (
-                            <Text>Oi</Text>
-                        )} />
-                    }/>
                 </Box>
 
             </ScrollView>
