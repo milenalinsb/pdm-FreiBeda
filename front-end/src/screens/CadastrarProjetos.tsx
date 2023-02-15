@@ -30,10 +30,10 @@ export const CadastrarProjetos = ({ navigation, route }: NavigationProps) => {
   return (
     <>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Osc")}
+        onPress={() => navigation.navigate("ProjetosOsc", route.params)}
         activeOpacity={0.8}
       >
-        <Back text="OSC" />
+        <Back text="Projetos" />
       </TouchableOpacity>
       <ScrollView bg={"#ffffff"}>
         <Formik
@@ -77,9 +77,7 @@ export const CadastrarProjetos = ({ navigation, route }: NavigationProps) => {
                 textBody: "Criada com sucesso",
                 button: "Ok",
                 onPressButton() {
-                  navigation.navigate("Osc", {
-                    paramPropKey: "paramPropValue",
-                  });
+                  navigation.navigate("Osc", route.params);
                   Dialog.hide();
                 },
               });

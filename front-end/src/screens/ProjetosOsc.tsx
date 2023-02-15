@@ -120,7 +120,9 @@ export const ProjetosOsc = ({ navigation, route }: Props) => {
             </ScrollView >
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate("CadastrarProjetos", route.params);
+                    navigation.navigate("CadastrarProjetos", {
+                        ...route.params
+                    });
                 }}
                 activeOpacity={0.8}
             >
