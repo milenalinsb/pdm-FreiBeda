@@ -26,4 +26,8 @@ routeProjetos.delete('/projetos/deletarProjetos/:id',
                     verificarToken,
                     projetosController.deletarProjeto);
 
+                    routeProjetos.get('/projetos/osc/:id',
+                    verificarToken,
+                    projetosController.buscarTodosProjetosOSC);
+
 export { routeProjetos };

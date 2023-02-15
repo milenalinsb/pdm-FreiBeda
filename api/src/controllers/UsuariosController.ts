@@ -37,6 +37,7 @@ export class UsuariosController {
 
     async uploadAvatarUsuario(req: Request, res: Response) {
         if (!req.files || Object.keys(req.files).length === 0) {
+            console.log(12345);
             return res.status(400).send('No files were uploaded.');
           }
         const avatar =<UploadedFile> req.files.avatar;

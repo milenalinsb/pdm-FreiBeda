@@ -1,5 +1,7 @@
+import { MaterialIcons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { Box } from "native-base";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Back } from "../components/Back";
@@ -7,7 +9,6 @@ import { Footer } from "../components/Footer";
 import { api } from "../services/api";
 import { getToken } from "../services/asyncStorage";
 import { NavigationProps } from "../types/navigation";
-import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {
   navigation: NavigationProps;
@@ -16,13 +17,13 @@ type Props = {
 
 export const Map = ({ navigation, route }: Props) => {
   const [region, setRegion] = useState({
-    latitude:-6.702519358552747,
+    latitude: -6.702519358552747,
     longitude: -38.48489647033116,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
 
-  useEffect(() => {
+  useFocusEffect(() => {
     (async () => {
       const token = await getToken("@token");
       const endereco = await api.get(
@@ -40,7 +41,7 @@ export const Map = ({ navigation, route }: Props) => {
         longitudeDelta: 0.0421,
       });
     })();
-  }, [route]);
+  });
 
   return (
     <Box bg={"white"}>
@@ -50,11 +51,13 @@ export const Map = ({ navigation, route }: Props) => {
       >
         <Back text="Voltar" />
       </TouchableOpacity>
-      <MapView initialRegion={region}
-      customMapStyle={mapStyle}
-       style={styles.map}>
+      <MapView
+        initialRegion={region}
+        customMapStyle={mapStyle}
+        style={styles.map}
+      >
         <Marker coordinate={region}>
-        <MaterialIcons name={"location-on"} size={60} color={"#4bf90b"} />
+          <MaterialIcons name={"location-on"} size={60} color={"#4bf90b"} />
         </Marker>
       </MapView>
       <Footer navigation={navigation} page={"Dashboard"} />

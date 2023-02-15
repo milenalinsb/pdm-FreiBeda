@@ -72,6 +72,28 @@ export class ProjetosController {
         }
     }
 
+    async buscarTodosProjetosOSC(req: Request, res: Response) {
+        try {
+            const token = <string>req.headers.authorization
+
+            await verificarTokenBl({ token })
+
+            const { id } = <IId>(<unknown>req.params)
+
+            const data = await prisma.projetos.findMany({
+                where:{
+                    oSCId:id
+                }
+            })
+
+            return res.status(200).json(data)
+        } catch (error: any) {
+            return res.status(400).json({
+                message: error.message,
+            })
+        }
+    }
+
     async buscarProjetoById(req: Request, res: Response) {
         try {
             const token = <string>req.headers.authorization
